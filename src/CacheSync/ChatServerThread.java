@@ -20,8 +20,8 @@ public class ChatServerThread extends Thread {
     private ChatServer server = null;
     private Socket socket = null;
     private int ID = -1;
-    InputStream is=null;
-    ObjectInputStream ois=null;
+    private InputStream is=null;
+    private ObjectInputStream ois=null;
 //    private DataInputStream streamIn = null;
 //    private DataOutputStream streamOut = null;
     private GUI g;
@@ -102,6 +102,12 @@ public class ChatServerThread extends Thread {
     public void close() throws IOException {
         if (socket != null) {
             socket.close();
+        }
+         if (is != null) {
+            is.close();
+        }
+        if (ois != null) {
+            ois.close();
         }
 //        if (streamIn != null) {
 //            streamIn.close();

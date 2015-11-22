@@ -19,7 +19,10 @@ public class ChatClient implements Runnable {
     private Socket socket = null;
     private Thread thread = null;
    // private DataInputStream console = null;
-    private DataOutputStream streamOut = null;
+   // private DataOutputStream streamOut = null;
+    OutputStream os = null;
+    ObjectOutputStream oos= null;
+    private Payload pay=null;
     private ChatClientThread client = null;
     GUI g;
 
@@ -32,8 +35,8 @@ public class ChatClient implements Runnable {
                 g.setTextMessage("Establishing connection. Please wait ...");
             }
         });
-
-        try {
+ 
+       try {
             socket = new Socket(serverName, serverPort);
             System.out.println("Connected: " + socket);
             SwingUtilities.invokeLater(new Runnable() {
@@ -65,8 +68,11 @@ public class ChatClient implements Runnable {
 
     public void send(){
             try {
-                streamOut.writeUTF(g.getTextSend());
-                streamOut.flush();
+//                streamOut.writeUTF(g.getTextSend());
+//                streamOut.flush();
+                pay=new Payload(1, "Test");
+                    oos.writeObject(pay);
+                    oos.flush();
             } catch (IOException ioe) {
                 System.out.println("Sending error: " + ioe.getMessage());
 
@@ -107,7 +113,9 @@ public class ChatClient implements Runnable {
 
     public void start() throws IOException {
        // console = new DataInputStream(System.in);
-        streamOut = new DataOutputStream(socket.getOutputStream());
+       // streamOut = new DataOutputStream(socket.getOutputStream());
+                os=socket.getOutputStream();
+                oos = new ObjectOutputStream(os);
         if (thread == null) {
             client = new ChatClientThread(this, socket, this.g);
             thread = new Thread(this);
@@ -124,8 +132,8 @@ public class ChatClient implements Runnable {
 //            if (console != null) {
 //                console.close();
 //            }
-            if (streamOut != null) {
-                streamOut.close();
+            if (os != null) {
+                os.close();
             }
             if (socket != null) {
                 socket.close();

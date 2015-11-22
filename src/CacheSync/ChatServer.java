@@ -22,6 +22,7 @@ public class ChatServer implements Runnable {
     private ServerSocket server = null;
     private Thread thread = null;
     private int clientCount = 0;
+    public Payload load=null;
     GUI g;
 
     public ChatServer(int port, GUI gui) {
@@ -103,9 +104,19 @@ public class ChatServer implements Runnable {
         return -1;
     }
 
-    public synchronized void handle(int ID, Payload load) throws IOException {
+    public synchronized void handle(int ID, Payload pl) throws IOException {
+        if(load!= null){
+        this.load =pl;
         
-        
+           SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+               
+                g.setTextMessage("Payload ID: "+(load.id));
+                g.setTextMessage("Payload Value: "+(load.value));
+                
+            }
+        });
+        }
 //        if (input.equals(".bye")) {
 //            clients[findClient(ID)].send(".bye");
 //            remove(ID);
