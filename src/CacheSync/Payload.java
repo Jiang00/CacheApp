@@ -12,8 +12,8 @@ import java.io.Serializable;
  * @author shanliang
  */
 public class Payload implements Serializable{
-    int value ;
-    String id;
+    public int value ;
+   public String id;
 public  Payload(int v, String s ){
 this.value=v;
 this.id=s;

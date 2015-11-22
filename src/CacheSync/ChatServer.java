@@ -105,7 +105,6 @@ public class ChatServer implements Runnable {
     }
 
     public synchronized void handle(int ID, Payload pl) throws IOException {
-        if(load!= null){
         this.load =pl;
         
            SwingUtilities.invokeLater(new Runnable() {
@@ -116,15 +115,7 @@ public class ChatServer implements Runnable {
                 
             }
         });
-        }
-//        if (input.equals(".bye")) {
-//            clients[findClient(ID)].send(".bye");
-//            remove(ID);
-//        } else {
-//            for (int i = 0; i < clientCount; i++) {
-//                clients[i].send(ID + ": " + input);
-//            }
-//        }
+
     }
 
     public synchronized void remove(int ID) throws IOException {
