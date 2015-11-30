@@ -146,8 +146,9 @@ public class ChatClient implements Runnable {
                 }
             });
         }
+        if(client!=null){
         client.close();
-
+        }
     }
 
     public static void main(String args[]) {
