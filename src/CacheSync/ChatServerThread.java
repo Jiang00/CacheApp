@@ -24,6 +24,9 @@ public class ChatServerThread extends Thread {
     private ObjectInputStream ois=null;
 //    private DataInputStream streamIn = null;
 //    private DataOutputStream streamOut = null;
+      OutputStream os = null;
+    ObjectOutputStream oos= null;
+    Payload pay=null;
     private GUI g;
     
 
@@ -38,21 +41,25 @@ public class ChatServerThread extends Thread {
 
     }
 
-//    public void send(String msg) throws IOException {
-//        try {
+    public void send(String msg) throws IOException {
+        try {
+            
+//                 pay=new Payload(1, "Set IDs", keyList);
+                    oos.writeObject(pay);
+                    oos.flush();
 //            streamOut.writeUTF(msg);
 //            streamOut.flush();
-//        } catch (IOException ioe) {
-//            SwingUtilities.invokeLater(new Runnable() {
-//            public void run() {
-//                g.setTextMessage(ID + " ERROR sending: " + ioe.getMessage());
-//            }
-//        });
-//            System.out.println(ID + " ERROR sending: " + ioe.getMessage());
-//            server.remove(ID);
-//            stop();
-//        }
-//    }
+        } catch (IOException ioe) {
+            SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                g.setTextMessage(ID + " ERROR sending: " + ioe.getMessage());
+            }
+        });
+            System.out.println(ID + " ERROR sending: " + ioe.getMessage());
+            server.remove(ID);
+            stop();
+        }
+    }
 
     public int getID() {
         return ID;
@@ -95,6 +102,8 @@ public class ChatServerThread extends Thread {
     public void open() throws IOException {
          is = socket.getInputStream();
          ois = new ObjectInputStream(is);
+         os=socket.getOutputStream();
+         oos = new ObjectOutputStream(os);
 //        streamIn = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
 //        streamOut = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
     }
@@ -109,6 +118,9 @@ public class ChatServerThread extends Thread {
         if (ois != null) {
             ois.close();
         }
+        if (os != null) {
+                os.close();
+            }
 //        if (streamIn != null) {
 //            streamIn.close();
 //        }
