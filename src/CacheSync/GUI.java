@@ -362,7 +362,8 @@ public class GUI extends javax.swing.JFrame {
 
     private void jButtonDisconnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDisconnectActionPerformed
         // TODO add your handling code here:
-        
+        jButtonConnect.setEnabled(true);
+        jButtonDisconnect.setEnabled(false);
         client.stop();
     }//GEN-LAST:event_jButtonDisconnectActionPerformed
 
