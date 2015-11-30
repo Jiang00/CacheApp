@@ -25,6 +25,8 @@ public class ChatClient implements Runnable {
     ObjectOutputStream oos= null;
     private Payload pay=null;
     private ChatClientThread client = null;
+    private Payload payReturn=null;
+    
     GUI g;
 
     public ChatClient(){};
@@ -92,24 +94,8 @@ public class ChatClient implements Runnable {
         
     }
 
-    public void handle(String msg) {
-        if (msg.equals(".bye")) {
-            System.out.println("Good bye. Press RETURN to exit ...");
-
-            SwingUtilities.invokeLater(new Runnable() {
-                public void run() {
-                    g.setTextMessage("Good bye. Press RETURN to exit ...");
-                }
-            });
-            stop();
-        } else {
-            System.out.println(msg);
-            SwingUtilities.invokeLater(new Runnable() {
-                public void run() {
-                    g.setTextMessage(msg);
-                }
-            });
-        }
+    public void handle(Payload msg) {
+      
     }
 
     public void start() throws IOException {

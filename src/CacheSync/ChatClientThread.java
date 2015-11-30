@@ -17,7 +17,11 @@ public class ChatClientThread extends Thread {
 
     private Socket socket = null;
     private ChatClient client = null;
-    private DataInputStream streamIn = null;
+    //private DataInputStream streamIn = null;
+    private InputStream is=null;
+    private ObjectInputStream ois=null;
+    
+    
     boolean listen = true;
     GUI g;
 
@@ -33,7 +37,9 @@ public class ChatClientThread extends Thread {
 
     public void open() {
         try {
-            streamIn = new DataInputStream(socket.getInputStream());
+            is = socket.getInputStream();
+            ois = new ObjectInputStream(is);
+            //streamIn = new DataInputStream(socket.getInputStream());
             listen = true;
         } catch (IOException ioe) {
 
@@ -50,9 +56,15 @@ public class ChatClientThread extends Thread {
 
     public void close() {
         try {
-            if (streamIn != null) {
-                streamIn.close();
-            }
+//            if (streamIn != null) {
+//                streamIn.close();
+//            }
+        if (is != null) {
+            is.close();
+        }
+        if (ois != null) {
+            ois.close();
+        }
         } catch (IOException ioe) {
             System.out.println("Error closing input stream: " + ioe);
 
@@ -69,11 +81,11 @@ public class ChatClientThread extends Thread {
         listen();
     }
 
-    public void listen() {
+    public void listen() throws ClassNotFoundException {
         while (true) {
             while (listen) {
                 try {
-                    client.handle(streamIn.readUTF());
+                    client.handle((Payload)ois.readObject());
                 } catch (IOException ioe) {
                     System.out.println("Listening error: " + ioe.getMessage());
 
