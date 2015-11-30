@@ -56,6 +56,8 @@ public class GUI extends javax.swing.JFrame {
         jTextFieldPortServer = new javax.swing.JTextField();
         jButtonConnectServer = new javax.swing.JButton();
         jButtonDisconnectServer = new javax.swing.JButton();
+        jTextFieldPath = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
         jPanelCache = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jTextFieldSearchBar = new javax.swing.JTextField();
@@ -126,6 +128,14 @@ public class GUI extends javax.swing.JFrame {
             }
         });
 
+        jTextFieldPath.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldPathActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setText("Textfile Path:");
+
         javax.swing.GroupLayout jPanelConnectionLayout = new javax.swing.GroupLayout(jPanelConnection);
         jPanelConnection.setLayout(jPanelConnectionLayout);
         jPanelConnectionLayout.setHorizontalGroup(
@@ -133,65 +143,89 @@ public class GUI extends javax.swing.JFrame {
             .addGroup(jPanelConnectionLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1))
-            .addGroup(jPanelConnectionLayout.createSequentialGroup()
-                .addGap(127, 127, 127)
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel6)
-                .addGap(165, 165, 165))
-            .addGroup(jPanelConnectionLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addGroup(jPanelConnectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanelConnectionLayout.createSequentialGroup()
-                        .addComponent(jButtonConnect, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonDisconnect))
-                    .addGroup(jPanelConnectionLayout.createSequentialGroup()
-                        .addGroup(jPanelConnectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanelConnectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextFieldIP, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
-                            .addComponent(jTextFieldPort))))
-                .addGroup(jPanelConnectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanelConnectionLayout.createSequentialGroup()
-                        .addGap(123, 123, 123)
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldPortServer))
-                    .addGroup(jPanelConnectionLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 152, Short.MAX_VALUE)
-                        .addComponent(jButtonConnectServer, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonDisconnectServer)))
-                .addContainerGap(14, Short.MAX_VALUE))
             .addComponent(jButtonSync, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanelConnectionLayout.createSequentialGroup()
+                .addGroup(jPanelConnectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelConnectionLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addGroup(jPanelConnectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanelConnectionLayout.createSequentialGroup()
+                                .addComponent(jButtonConnect, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonDisconnect))
+                            .addGroup(jPanelConnectionLayout.createSequentialGroup()
+                                .addGroup(jPanelConnectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel1))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanelConnectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jTextFieldIP, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
+                                    .addComponent(jTextFieldPort)))))
+                    .addGroup(jPanelConnectionLayout.createSequentialGroup()
+                        .addGap(127, 127, 127)
+                        .addComponent(jLabel5)))
+                .addGroup(jPanelConnectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelConnectionLayout.createSequentialGroup()
+                        .addGap(120, 120, 120)
+                        .addGroup(jPanelConnectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelConnectionLayout.createSequentialGroup()
+                                .addGap(65, 65, 65)
+                                .addComponent(jLabel6)
+                                .addGap(168, 168, 168))
+                            .addGroup(jPanelConnectionLayout.createSequentialGroup()
+                                .addGroup(jPanelConnectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanelConnectionLayout.createSequentialGroup()
+                                        .addComponent(jLabel7)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jTextFieldPortServer))
+                                    .addGroup(jPanelConnectionLayout.createSequentialGroup()
+                                        .addComponent(jButtonConnectServer, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jButtonDisconnectServer))
+                                    .addGroup(jPanelConnectionLayout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addComponent(jTextFieldPath, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(17, 17, 17))))
+                    .addGroup(jPanelConnectionLayout.createSequentialGroup()
+                        .addGap(72, 72, 72)
+                        .addComponent(jLabel8)
+                        .addContainerGap())))
         );
         jPanelConnectionLayout.setVerticalGroup(
             jPanelConnectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelConnectionLayout.createSequentialGroup()
-                .addGroup(jPanelConnectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel6))
-                .addGap(1, 1, 1)
-                .addGroup(jPanelConnectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldIP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel7)
-                    .addComponent(jTextFieldPortServer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelConnectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldPort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2)
-                    .addComponent(jButtonConnectServer)
-                    .addComponent(jButtonDisconnectServer))
+                .addGroup(jPanelConnectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelConnectionLayout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addGap(1, 1, 1)
+                        .addGroup(jPanelConnectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextFieldIP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanelConnectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextFieldPort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanelConnectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButtonConnect)
+                            .addComponent(jButtonDisconnect)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelConnectionLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanelConnectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8)
+                            .addComponent(jTextFieldPath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel6)
+                        .addGap(1, 1, 1)
+                        .addGroup(jPanelConnectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(jTextFieldPortServer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanelConnectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButtonConnectServer)
+                            .addComponent(jButtonDisconnectServer))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanelConnectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonConnect)
-                    .addComponent(jButtonDisconnect))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonSync, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -324,6 +358,10 @@ public class GUI extends javax.swing.JFrame {
         jButtonConnectServer.setEnabled(true);
         jButtonDisconnectServer.setEnabled(false);
     }//GEN-LAST:event_jButtonDisconnectServerActionPerformed
+
+    private void jTextFieldPathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPathActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldPathActionPerformed
     
     public void setTextMessage(String message){
         
@@ -386,6 +424,7 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanelCache;
     private javax.swing.JPanel jPanelConnection;
     private javax.swing.JScrollPane jScrollPane1;
@@ -394,6 +433,7 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JTextArea jTextAreaMessage;
     private javax.swing.JTextArea jTextAreaSuggestion;
     private javax.swing.JTextField jTextFieldIP;
+    private javax.swing.JTextField jTextFieldPath;
     private javax.swing.JTextField jTextFieldPort;
     private javax.swing.JTextField jTextFieldPortServer;
     private javax.swing.JTextField jTextFieldSearchBar;
