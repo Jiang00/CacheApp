@@ -159,7 +159,7 @@ public class GUI extends javax.swing.JFrame {
             }
         });
 
-        jTextFieldPath.setText("/Users/shanliang/NetBeansProjects/ChatClient/src/CacheSync/DC1-sampleQueries.txt");
+        jTextFieldPath.setText("DC1-sampleQueries.txt");
         jTextFieldPath.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldPathActionPerformed(evt);
@@ -401,9 +401,7 @@ public class GUI extends javax.swing.JFrame {
 
     private void jButtonPathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPathActionPerformed
         // TODO add your handling code here:
-        SetInterface.buildStructure(jTextFieldPath.getSelectedText());
-        
-        
+        SetInterface.buildStructure(jTextFieldPath.getText());
     }//GEN-LAST:event_jButtonPathActionPerformed
     
     public void setTextMessage(String message){
