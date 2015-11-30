@@ -1,19 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package CacheSync;
-
-/**
- *
- * @author shanliang
- */
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -42,16 +27,20 @@ public class SetInterface {
     // Decalare a FileReader and initialize it to null
     private static FileReader myFileReader = null;
     
-    public static ArrayList<Integer> setKeyList = new ArrayList<Integer>();
+    public static ArrayList<Integer> setKeyList = new ArrayList<>();
     
-    public static TrieST<Integer> st = new TrieST<Integer>();
+    public static ArrayList<MySet> sets = new ArrayList<>();
+    
+    public static ArrayList<ArrayList<Integer>> hashTables = new ArrayList<>();
+    
+    public static TrieST<Integer> st = new TrieST<>();
     
     public static boolean buildStructure(String fileName) {
         // NOTE: Set boolean flag to see data to help debug
         boolean debug = false;
         
         // Create Sets and store them in an ArrayList
-        ArrayList<MySet> sets = new ArrayList<>();
+        
         for (char c : alphabet)
         {
             // Add set with the character as the identifier and a specified size
@@ -101,6 +90,7 @@ public class SetInterface {
         for (MySet s : sets)
         {
             setKeyList.add(s.getMyID());
+            hashTables.add(s.getHashTable());
         }
         
         // Print message if sets were built successfully
