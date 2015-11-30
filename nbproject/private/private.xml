@@ -3,19 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-            <file>file:/Users/shanliang/NetBeansProjects/ChatClient/src/CacheSync/Payload.java</file>
-            <file>file:/Users/shanliang/NetBeansProjects/ChatClient/src/CacheSync/ChatClientThread.java</file>
-            <file>file:/Users/shanliang/NetBeansProjects/ChatClient/src/CacheSync/ChatClient.java</file>
-            <file>file:/Users/shanliang/NetBeansProjects/ChatClient/src/CacheSync/SetInterface.java</file>
-            <file>file:/Users/shanliang/NetBeansProjects/ChatClient/src/CacheSync/ChatServer.java</file>
-            <file>file:/Users/shanliang/NetBeansProjects/ChatClient/src/CacheSync/ChatServerThread.java</file>
-            <file>file:/Users/shanliang/NetBeansProjects/ChatClient/src/CacheSync/GUI.java</file>
-            <file>file:/Users/shanliang/NetBeansProjects/ChatClient/src/CacheSync/ObjectSizeFetcher.java</file>
-            <file>file:/Users/shanliang/NetBeansProjects/ChatClient/src/CacheSync/MySet.java</file>
-=======
-            <file>file:/Users/shantanubobhate/Documents/Fall%202015/ENG%20EC%20504/Project/CacheApp/src/CacheSync/ChatServer.java</file>
->>>>>>> master
+            <file>file:/Users/shantanubobhate/Documents/Fall%202015/ENG%20EC%20504/Project/CacheApp/src/CacheSync/ChatClient.java</file>
         </group>
     </open-files>
 </project-private>
