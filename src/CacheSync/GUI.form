@@ -273,7 +273,7 @@
             </Component>
             <Component class="javax.swing.JTextField" name="jTextFieldPath">
               <Properties>
-                <Property name="text" type="java.lang.String" value="/Users/shanliang/NetBeansProjects/ChatClient/src/CacheSync/DC1-sampleQueries.txt"/>
+                <Property name="text" type="java.lang.String" value="DC1-sampleQueries.txt"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldPathActionPerformed"/>
