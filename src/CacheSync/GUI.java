@@ -349,7 +349,7 @@ public class GUI extends javax.swing.JFrame {
     private void jButtonSyncActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSyncActionPerformed
         // TODO add your handling code here:
         
-        client.send();
+        client.send(SetInterface.setKeyList);
     }//GEN-LAST:event_jButtonSyncActionPerformed
 
     private void jTextFieldPortServerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPortServerActionPerformed
