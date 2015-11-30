@@ -6,6 +6,7 @@
 package CacheSync;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  *
@@ -13,9 +14,12 @@ import java.io.Serializable;
  */
 public class Payload implements Serializable{
     public int value ;
-   public String id;
-public  Payload(int v, String s ){
+    public String id;
+    public ArrayList<Integer> keyList;
+    
+public  Payload(int v, String s, ArrayList<Integer> keyList){
 this.value=v;
 this.id=s;
+this.keyList=keyList;
 }
 }

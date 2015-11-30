@@ -113,6 +113,10 @@ public class ChatServer implements Runnable {
                 g.setTextMessage("Payload ID: "+(load.id));
                 g.setTextMessage("Payload Value: "+(load.value));
                 
+                for (Integer i : pl.keyList) {
+                    System.out.println(i);
+                }
+                
             }
         });
 

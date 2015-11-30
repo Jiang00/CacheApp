@@ -11,6 +11,7 @@ package CacheSync;
  */
 import java.net.*;
 import java.io.*;
+import java.util.ArrayList;
 import javax.swing.SwingUtilities;
 
 
@@ -66,11 +67,11 @@ public class ChatClient implements Runnable {
         }
     }
 
-    public void send(){
+    public void send(ArrayList<Integer> keyList){
             try {
 //                streamOut.writeUTF(g.getTextSend());
 //                streamOut.flush();
-                pay=new Payload(1, "Test");
+                pay=new Payload(1, "Test", keyList);
                     oos.writeObject(pay);
                     oos.flush();
             } catch (IOException ioe) {
