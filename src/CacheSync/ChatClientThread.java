@@ -81,7 +81,7 @@ public class ChatClientThread extends Thread {
         listen();
     }
 
-    public void listen() {
+    public void listen() throws ClassNotFoundException {
         while (true) {
             while (listen) {
                 try {
