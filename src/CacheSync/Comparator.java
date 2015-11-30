@@ -30,4 +30,16 @@ public class Comparator {
         return discrepancies;
     }
     
+    public static ArrayList compareHashTables(ArrayList<Integer> myId, ArrayList<Integer> otherId) {
+        ArrayList<Integer> toGet = new ArrayList();
+        
+        for (Integer id : otherId) {
+            if (!myId.contains(id)) {
+                toGet.add(id);
+            }
+        }
+        
+        return toGet;
+    }
+    
 }

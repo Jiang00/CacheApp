@@ -503,6 +503,5 @@ private void getSuggestions(String typed){
     ChatClient client=new ChatClient();
     ChatServer server;
     private String[] currentSuggestions;
-    private String topSuggestions;
-    private static final int NR = 4; 
+    private String topSuggestions; 
 }

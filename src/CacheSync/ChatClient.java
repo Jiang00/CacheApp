@@ -71,7 +71,7 @@ public class ChatClient implements Runnable {
             try {
 //                streamOut.writeUTF(g.getTextSend());
 //                streamOut.flush();
-                pay=new Payload(1, "Test", keyList);
+                pay=new Payload(1, "Set IDs", keyList);
                     oos.writeObject(pay);
                     oos.flush();
             } catch (IOException ioe) {

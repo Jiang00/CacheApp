@@ -6,8 +6,10 @@
 package CacheSync;
 
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
@@ -113,13 +115,26 @@ public class ChatServer implements Runnable {
                 g.setTextMessage("Payload ID: "+(load.id));
                 g.setTextMessage("Payload Value: "+(load.value));
                 
-                for (Integer i : pl.keyList) {
-                    System.out.println(i);
+                if (pl.value == 1) {
+                    System.out.println("Recieved Set IDs");
+                    ArrayList<Integer> diff = Comparator.compare(SetInterface.setKeyList, pl.keyList);
+                    for (Integer i : diff) {
+                        System.out.println( SetInterface.sets.get(i).getName() );
+                    }
+                    //////////////////////////////////////
+                    /* Need to send the Hashtables here */
+                    // An ArrayList of ArrayLists
+                    // SetInterface.hashTables; // To Send
+                    //////////////////////////////////////
                 }
-                
+                else if (pl.value == 2) {
+                    System.out.println("Recieved HashTables");
+                    /////////////////////////////////////////
+                    /* Need to compare the hashtables here */
+                    /////////////////////////////////////////
+                }
             }
         });
-
     }
 
     public synchronized void remove(int ID) throws IOException {
