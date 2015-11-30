@@ -8,6 +8,8 @@ package CacheSync;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 /**
  *
@@ -27,6 +29,34 @@ public class GUI extends javax.swing.JFrame {
         jButtonConnect.setEnabled(false);
         jButtonSearch.setEnabled(false);
         jButtonDisconnectServer.setEnabled(false);
+        
+        
+        
+        jTextFieldSearchBar.getDocument().addDocumentListener(new DocumentListener(){
+            @Override
+            public void insertUpdate(DocumentEvent de) {
+                if (jTextFieldSearchBar.getText().isEmpty()){ getSuggestions((null));}
+                if (!jTextFieldSearchBar.getText().isEmpty()){getSuggestions(jTextFieldSearchBar.getText());}
+
+                //System.out.println(txtIn.getText());
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent de) {
+                if (jTextFieldSearchBar.getText().isEmpty()) {getSuggestions(null);}
+                if (!jTextFieldSearchBar.getText().isEmpty()) {getSuggestions(jTextFieldSearchBar.getText());}
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent de) {
+            //Plain text components don't fire these events.
+            }
+        });
+        
+        
+        
+        
+        
 
     }
 
@@ -58,6 +88,7 @@ public class GUI extends javax.swing.JFrame {
         jButtonDisconnectServer = new javax.swing.JButton();
         jTextFieldPath = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
+        jButtonPath = new javax.swing.JButton();
         jPanelCache = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jTextFieldSearchBar = new javax.swing.JTextField();
@@ -128,6 +159,7 @@ public class GUI extends javax.swing.JFrame {
             }
         });
 
+        jTextFieldPath.setText("/Users/shanliang/NetBeansProjects/ChatClient/src/CacheSync/DC1-sampleQueries.txt");
         jTextFieldPath.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldPathActionPerformed(evt);
@@ -135,6 +167,13 @@ public class GUI extends javax.swing.JFrame {
         });
 
         jLabel8.setText("Textfile Path:");
+
+        jButtonPath.setText("Load");
+        jButtonPath.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPathActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelConnectionLayout = new javax.swing.GroupLayout(jPanelConnection);
         jPanelConnection.setLayout(jPanelConnectionLayout);
@@ -145,51 +184,48 @@ public class GUI extends javax.swing.JFrame {
                 .addComponent(jScrollPane1))
             .addComponent(jButtonSync, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanelConnectionLayout.createSequentialGroup()
-                .addGroup(jPanelConnectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(10, 10, 10)
+                .addGroup(jPanelConnectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanelConnectionLayout.createSequentialGroup()
-                        .addGap(10, 10, 10)
+                        .addComponent(jButtonConnect, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonDisconnect))
+                    .addGroup(jPanelConnectionLayout.createSequentialGroup()
                         .addGroup(jPanelConnectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanelConnectionLayout.createSequentialGroup()
-                                .addComponent(jButtonConnect, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonDisconnect))
-                            .addGroup(jPanelConnectionLayout.createSequentialGroup()
-                                .addGroup(jPanelConnectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel1))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanelConnectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jTextFieldIP, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
-                                    .addComponent(jTextFieldPort)))))
-                    .addGroup(jPanelConnectionLayout.createSequentialGroup()
-                        .addGap(127, 127, 127)
-                        .addComponent(jLabel5)))
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanelConnectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addGroup(jPanelConnectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jTextFieldIP, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
+                                .addComponent(jTextFieldPort)))))
+                .addGap(35, 35, 35)
+                .addComponent(jLabel8)
                 .addGroup(jPanelConnectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelConnectionLayout.createSequentialGroup()
-                        .addGap(120, 120, 120)
-                        .addGroup(jPanelConnectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(2, 2, 2)
+                        .addGroup(jPanelConnectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelConnectionLayout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanelConnectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanelConnectionLayout.createSequentialGroup()
+                                        .addComponent(jLabel6)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addComponent(jTextFieldPortServer)))
                             .addGroup(jPanelConnectionLayout.createSequentialGroup()
-                                .addGap(65, 65, 65)
-                                .addComponent(jLabel6)
-                                .addGap(168, 168, 168))
-                            .addGroup(jPanelConnectionLayout.createSequentialGroup()
-                                .addGroup(jPanelConnectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(jPanelConnectionLayout.createSequentialGroup()
-                                        .addComponent(jLabel7)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextFieldPortServer))
-                                    .addGroup(jPanelConnectionLayout.createSequentialGroup()
-                                        .addComponent(jButtonConnectServer, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButtonDisconnectServer))
-                                    .addGroup(jPanelConnectionLayout.createSequentialGroup()
-                                        .addGap(0, 0, Short.MAX_VALUE)
-                                        .addComponent(jTextFieldPath, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(17, 17, 17))))
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jButtonConnectServer, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonDisconnectServer)))
+                        .addGap(17, 17, 17))
                     .addGroup(jPanelConnectionLayout.createSequentialGroup()
-                        .addGap(72, 72, 72)
-                        .addComponent(jLabel8)
-                        .addContainerGap())))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldPath, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonPath, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(37, 37, 37))))
         );
         jPanelConnectionLayout.setVerticalGroup(
             jPanelConnectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -213,7 +249,8 @@ public class GUI extends javax.swing.JFrame {
                         .addContainerGap()
                         .addGroup(jPanelConnectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8)
-                            .addComponent(jTextFieldPath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextFieldPath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonPath))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel6)
                         .addGap(1, 1, 1)
@@ -225,7 +262,7 @@ public class GUI extends javax.swing.JFrame {
                             .addComponent(jButtonConnectServer)
                             .addComponent(jButtonDisconnectServer))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonSync, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -260,15 +297,15 @@ public class GUI extends javax.swing.JFrame {
             .addGroup(jPanelCacheLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelCacheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanelCacheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2)
                     .addGroup(jPanelCacheLayout.createSequentialGroup()
+                        .addGroup(jPanelCacheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jTextFieldSearchBar, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonSearch, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE))
-                    .addComponent(jScrollPane2)))
+                        .addComponent(jButtonSearch, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE))))
         );
         jPanelCacheLayout.setVerticalGroup(
             jPanelCacheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -279,10 +316,9 @@ public class GUI extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(jButtonSearch))
                 .addGap(18, 18, 18)
-                .addGroup(jPanelCacheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(275, Short.MAX_VALUE))
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Cache", jPanelCache);
@@ -362,6 +398,13 @@ public class GUI extends javax.swing.JFrame {
     private void jTextFieldPathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPathActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldPathActionPerformed
+
+    private void jButtonPathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPathActionPerformed
+        // TODO add your handling code here:
+        SetInterface.buildStructure(jTextFieldPath.getSelectedText());
+        
+        
+    }//GEN-LAST:event_jButtonPathActionPerformed
     
     public void setTextMessage(String message){
         
@@ -375,6 +418,24 @@ public class GUI extends javax.swing.JFrame {
     public int getTextPort(){
        return Integer.parseInt(jTextFieldPort.getText());
     }
+    
+private void getSuggestions(String typed){
+   //Clear previous
+        topSuggestions = null;
+         
+        //Get array of current suggestions and build output string
+        if (typed != null){
+        currentSuggestions = SetInterface.st.keysWithPrefixWeight(typed.toLowerCase());
+        for (String s: currentSuggestions) {
+                if (s==null && topSuggestions == null)      topSuggestions = "No further suggestions\n";
+                if (s==null && topSuggestions != null)      topSuggestions += "\n";
+                if (s!=null && topSuggestions != null)      topSuggestions += s + "\n";
+                if (s!=null && topSuggestions == null)      topSuggestions = s + "\n";
+        }
+        jTextAreaSuggestion.setText(topSuggestions);
+    }
+    if (typed == null) jTextAreaSuggestion.setText("");
+}
     /**
      * @param args the command line arguments
      */
@@ -415,6 +476,7 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JButton jButtonConnectServer;
     private javax.swing.JButton jButtonDisconnect;
     private javax.swing.JButton jButtonDisconnectServer;
+    private javax.swing.JButton jButtonPath;
     private javax.swing.JButton jButtonSearch;
     private javax.swing.JButton jButtonSync;
     private javax.swing.JLabel jLabel1;
@@ -440,4 +502,7 @@ public class GUI extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
     ChatClient client=new ChatClient();
     ChatServer server;
+    private String[] currentSuggestions;
+    private String topSuggestions;
+    private static final int NR = 4; 
 }
