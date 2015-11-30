@@ -117,7 +117,9 @@ public class ChatServer implements Runnable {
                     System.out.println(i);
                 }
                 
+                Comparator.compare(SetInterface.setKeyList, pl.keyList);
             }
+            
         });
 
     }
