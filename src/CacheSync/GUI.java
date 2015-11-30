@@ -349,7 +349,7 @@ public class GUI extends javax.swing.JFrame {
     private void jButtonSyncActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSyncActionPerformed
         // TODO add your handling code here:
         
-        client.send();
+        client.send(SetInterface.setKeyList);
     }//GEN-LAST:event_jButtonSyncActionPerformed
 
     private void jTextFieldPortServerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPortServerActionPerformed
@@ -376,7 +376,7 @@ public class GUI extends javax.swing.JFrame {
 
     private void jButtonConnectServerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConnectServerActionPerformed
         // TODO add your handling code here:
-        server = new ChatServer(Integer.parseInt(jTextFieldPort.getText()), GUI.this);
+        server = new ChatServer(Integer.parseInt(jTextFieldPortServer.getText()), GUI.this);
         jButtonConnect.setEnabled(true);
         jPanelCache.setEnabled(true);
         jButtonSearch.setEnabled(true);
@@ -401,7 +401,8 @@ public class GUI extends javax.swing.JFrame {
 
     private void jButtonPathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPathActionPerformed
         // TODO add your handling code here:
-        SetInterface.buildStructure(jTextFieldPath.getText());
+        if (SetInterface.buildStructure(jTextFieldPath.getText()))
+            jTextAreaMessage.append("\nDone adding elements.");
     }//GEN-LAST:event_jButtonPathActionPerformed
     
     public void setTextMessage(String message){

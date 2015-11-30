@@ -46,7 +46,7 @@ public class SetInterface {
     
     public static TrieST<Integer> st = new TrieST<Integer>();
     
-    public static void buildStructure(String fileName) {
+    public static boolean buildStructure(String fileName) {
         // NOTE: Set boolean flag to see data to help debug
         boolean debug = false;
         
@@ -85,6 +85,7 @@ public class SetInterface {
         // Catch any exceptions
         } catch (IOException | NumberFormatException e) {
             System.out.println(e);
+            return false;
         } finally {
             // Try to close the file
             try {
@@ -92,6 +93,7 @@ public class SetInterface {
             // Catch any exceptions
             } catch (Exception e) {
                 System.out.println(e);
+                return false;
             }
         }
         
@@ -118,8 +120,10 @@ public class SetInterface {
                 s.printMap();
             });
         }
+        
+        return true;
     }
-    
+
     // Function to hash strings
     private static int Hash(String key) {
         int strlen = key.length();
