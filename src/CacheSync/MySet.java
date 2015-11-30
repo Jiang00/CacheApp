@@ -5,6 +5,7 @@
  */
 package CacheSync;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -20,6 +21,8 @@ public class MySet {
     /* Properties and Elements */
     // Set name or type of data it holds
     private final char identifier;
+    // ArrayList to store the hash values
+    private final ArrayList<Integer> hashes;
     // Hashmap to store strings and their hash values
     private final HashMap data;
     // Hashmap to store strings and their popularities
@@ -32,6 +35,7 @@ public class MySet {
     /* Constructor */
     public MySet(char name,int tableSize) {
         identifier = name;
+        hashes = new ArrayList(tableSize);
         data = new HashMap(tableSize);
         popularities = new HashMap(tableSize);
         numberOfElements = 0;
@@ -39,6 +43,7 @@ public class MySet {
     
     // Function to add pair to HashMap
     public void addNewEntry(int key, String value, int popularity) {
+        hashes.add(key);
         data.put(key, value);
         popularities.put(value, popularity);
         ID += key;
@@ -59,6 +64,11 @@ public class MySet {
     // Function of get numberOfElements
     public int getSize() {
         return numberOfElements;
+    }
+    
+    // Function to get Hash Table
+    public ArrayList<Integer> getHashTable() {
+        return hashes;
     }
     
     // Function to print HashTable

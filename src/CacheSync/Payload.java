@@ -12,14 +12,14 @@ import java.util.ArrayList;
  *
  * @author shanliang
  */
-public class Payload implements Serializable{
+public class Payload implements Serializable {
     public int value ;
     public String id;
-    public ArrayList<Integer> keyList;
+    public ArrayList keyList;
     
-public  Payload(int v, String s, ArrayList<Integer> keyList){
-this.value=v;
-this.id=s;
-this.keyList=keyList;
-}
+    public Payload(int v, String s, ArrayList keyList) {
+        this.value=v;
+        this.id=s;
+        this.keyList=keyList;
+    }
 }
