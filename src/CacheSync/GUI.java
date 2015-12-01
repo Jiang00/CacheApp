@@ -425,7 +425,7 @@ private void getSuggestions(String typed){
          
         //Get array of current suggestions and build output string
         if (typed != null){
-        currentSuggestions = SetInterface.st.keysWithPrefixWeight(typed.toLowerCase());
+        currentSuggestions = Initialize.st.keysWithPrefixWeight(typed.toLowerCase());
         for (String s: currentSuggestions) {
                 if (s==null && topSuggestions == null)      topSuggestions = "No further suggestions\n";
                 if (s==null && topSuggestions != null)      topSuggestions += "\n";

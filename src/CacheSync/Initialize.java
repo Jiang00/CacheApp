@@ -31,6 +31,8 @@ public class Initialize {
     
     private static final ArrayList<String> strings = new ArrayList();
     
+    public static TrieST<Integer> st = new TrieST<>();
+    
     public static boolean buildStructure(String fileName) {
         // NOTE: Set boolean flag to see data to help debug
         boolean debug = false;
@@ -45,6 +47,7 @@ public class Initialize {
                 String[] split = line.split("\\s+");
                 strings.add(split[0]);
                 filter.add(split[0]);
+                st.put(split[0], Integer.parseInt(split[1]));
             }
         // Catch any exceptions
         } catch (IOException | NumberFormatException e) {
