@@ -94,28 +94,29 @@ public class ChatClient implements Runnable {
         System.out.println("Received payload with\n" + 
                            "\t ID: " + msg.id);
         
-        if (msg.id == 1) {
-            System.out.println("Recieved Bloom Filter");
-            // Determine which strings the client needs
-            ArrayList<String> stringsToSend = Initialize.getStrings(msg.filter, msg.keySize, msg.numberOfElements);
-            // Create the payload
-            pay = new Payload(2, Initialize.filter, stringsToSend);
-            // Send it
-            send(pay);
-        }
-        else if (msg.id == 2) {
+//        if (msg.id == 1) {
+//            System.out.println("Recieved Bloom Filter");
+//            // Determine which strings the client needs
+//            ArrayList<String> stringsToSend = Initialize.getStrings(msg.filter, msg.keySize, msg.numberOfElements);
+//            // Create the payload
+//            pay = new Payload(2, Initialize.filter, stringsToSend);
+//            // Send it
+//            send(pay);
+//        }
+        if (msg.id == 2) {
             System.out.println("Recieved ArrayList of Strings and Bloom Filter");
             System.out.println("Number of strings recieved: " + msg.strings.size());
             // Determine which strings the client needs
             ArrayList<String> stringsToSend = Initialize.getStrings(msg.filter, msg.keySize, msg.numberOfElements);
             pay = new Payload(3, null, stringsToSend);
             send(pay);
-        }
-        else if (msg.id == 3) {
-            System.out.println("Recieved ArrayList of Strings and Bloom Filter");
-            System.out.println("Number of strings recieved: " + msg.strings.size());
             Initialize.addStrings(msg.strings);
         }
+//        else if (msg.id == 3) {
+//            System.out.println("Recieved ArrayList of Strings");
+//            System.out.println("Number of strings recieved: " + msg.strings.size());
+//            Initialize.addStrings(msg.strings);
+//        }
 
     }
 

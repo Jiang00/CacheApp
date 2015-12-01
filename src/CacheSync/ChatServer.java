@@ -137,22 +137,22 @@ public class ChatServer implements Runnable {
                         Logger.getLogger(ChatServer.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-                else if (pl.id == 2) {
-                    System.out.println("Recieved ArrayList of Strings and Bloom Filter");
-                    System.out.println("Number of strings recieved: " + pl.strings.size());
-                    // Determine which strings the client needs
-                    ArrayList<String> stringsToSend = Initialize.getStrings(pl.filter, pl.keySize, pl.numberOfElements);
-                    load = new Payload(3, null, stringsToSend);
-                    try {
-                        for (int i = 0; i < clientCount; i++) {
-                            clients[i].send(load);
-                        }
-                    } catch (IOException ex) {
-                        Logger.getLogger(ChatServer.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
+//                else if (pl.id == 2) {
+//                    System.out.println("Recieved ArrayList of Strings and Bloom Filter");
+//                    System.out.println("Number of strings recieved: " + pl.strings.size());
+//                    // Determine which strings the client needs
+//                    ArrayList<String> stringsToSend = Initialize.getStrings(pl.filter, pl.keySize, pl.numberOfElements);
+//                    load = new Payload(3, null, stringsToSend);
+//                    try {
+//                        for (int i = 0; i < clientCount; i++) {
+//                            clients[i].send(load);
+//                        }
+//                    } catch (IOException ex) {
+//                        Logger.getLogger(ChatServer.class.getName()).log(Level.SEVERE, null, ex);
+//                    }
+//                }
                 else if (pl.id == 3) {
-                    System.out.println("Recieved ArrayList of Strings");
+                    System.out.println("Recieved ArrayList of Strings and Bloom Filter");
                     System.out.println("Number of strings recieved: " + pl.strings.size());
                     Initialize.addStrings(pl.strings);
                 }
