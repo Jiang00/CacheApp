@@ -90,7 +90,10 @@ public class Initialize {
         System.out.println("Refreshing Data Structure...");
         int ecount = strings.size() + toAdd.size();
         for (String s : toAdd) {
-            if (!strings.contains(s)) strings.add(s);
+            if (!strings.contains(s)) {
+                strings.add(s);
+                st.put(s, 0);
+            }
         }
         int acount = strings.size();
         int dcount = ecount-acount;
@@ -121,5 +124,20 @@ public class Initialize {
             }
         }
         System.out.println("File Constructed");
+    }
+    
+    public static void insert(String entry) {
+        if (!st.contains(entry)){
+           st.put(entry, 0);
+           strings.add(entry);
+           filter.add(entry);
+           System.out.println("Entry added");
+        }
+        else {
+            int cweight = st.get(entry) + 1;
+            st.put(entry, null);
+            st.put(entry,cweight);
+            System.out.println("Updated value to " + st.get(entry));
+        }
     }
 }
