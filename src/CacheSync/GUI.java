@@ -279,7 +279,8 @@ public class GUI extends javax.swing.JFrame {
 
         jLabel4.setText("Suggestion:");
 
-        jButtonSearch.setText("Search");
+        jButtonSearch.setText("Query");
+        jButtonSearch.setToolTipText("");
         jButtonSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonSearchActionPerformed(evt);
@@ -344,6 +345,10 @@ public class GUI extends javax.swing.JFrame {
 
     private void jButtonSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSearchActionPerformed
         // TODO add your handling code here:
+        //get text from field and put in Trie and strings list?
+        String entry = jTextFieldSearchBar.getText();
+        Initialize.insert(entry);
+        jTextFieldSearchBar.setText("");
     }//GEN-LAST:event_jButtonSearchActionPerformed
 
     private void jButtonSyncActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSyncActionPerformed
