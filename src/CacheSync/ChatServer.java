@@ -152,8 +152,9 @@ public class ChatServer implements Runnable {
                     }
                 }
                 else if (pl.id == 3) {
-                    System.out.println("Recieved ArrayList of Strings and Bloom Filter");
+                    System.out.println("Recieved ArrayList of Strings");
                     System.out.println("Number of strings recieved: " + pl.strings.size());
+                    Initialize.addStrings(pl.strings);
                 }
             }
         });

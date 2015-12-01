@@ -1,7 +1,9 @@
 package CacheSync;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,8 +29,7 @@ public class Initialize {
     // Hashmap to store strings and their popularities
     private static HashMap popularities;
     
-    private static final ArrayList strings = new ArrayList();
-
+    private static final ArrayList<String> strings = new ArrayList();
     
     public static boolean buildStructure(String fileName) {
         // NOTE: Set boolean flag to see data to help debug
@@ -80,5 +81,42 @@ public class Initialize {
         }
         System.out.println("Processing done.");
         return toSendStrings;
+    }
+    
+    public static void addStrings(ArrayList<String> toAdd) {
+        System.out.println("Refreshing Data Structure...");
+        int ecount = strings.size() + toAdd.size();
+        for (String s : toAdd) {
+            if (!strings.contains(s)) strings.add(s);
+        }
+        int acount = strings.size();
+        int dcount = ecount-acount;
+        System.out.println("Done Refreshing");
+        System.out.println("Total number of false positives: " + dcount);
+        System.out.println("Constructing File");
+        FileWriter myFileWriter = null;
+        try {
+            // Try to read from the file
+            myFileWriter = new FileWriter("output.txt");
+            BufferedWriter myBufferedWriter = new BufferedWriter(myFileWriter);
+            
+            for (String s : strings) {
+                myBufferedWriter.write(s);
+                myBufferedWriter.newLine();
+            }
+            myBufferedWriter.close();
+        // Catch any exceptions
+        } catch (IOException | NumberFormatException e) {
+            System.out.println(e);
+        } finally {
+            // Try to close the file
+            try {
+                if (myFileWriter != null) myFileWriter.close();
+            // Catch any exceptions
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+        System.out.println("File Constructed");
     }
 }
