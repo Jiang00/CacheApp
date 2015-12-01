@@ -69,11 +69,11 @@ public class ChatClient implements Runnable {
         }
     }
 
-    public void send(ArrayList<Integer> keyList){
+    public void send(byte[] filter){
             try {
 //                streamOut.writeUTF(g.getTextSend());
 //                streamOut.flush();
-                pay=new Payload(1, "Set IDs", keyList);
+                pay=new Payload(1, "Bloom Filter", filter);
                     oos.writeObject(pay);
                     oos.flush();
             } catch (IOException ioe) {
@@ -95,7 +95,27 @@ public class ChatClient implements Runnable {
     }
 
     public void handle(Payload msg) {
-      
+        
+        if (msg.value == 1) {
+            System.out.println("Recieved Set IDs");
+            // Compare filter
+            
+            //////////////////////////////////////
+            /* Need to send the Hashtables here */
+            // An ArrayList of ArrayLists
+            // SetInterface.hashTables; // To Send
+            //////////////////////////////////////
+            
+        }
+        else if (msg.value == 2) {
+            System.out.println("Recieved HashTables");
+            /////////////////////////////////////////
+            /* Need to compare the hashtables here */
+            /////////////////////////////////////////
+            
+        }
+        
+        
     }
 
     public void start() throws IOException {

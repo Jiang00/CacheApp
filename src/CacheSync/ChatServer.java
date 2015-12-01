@@ -25,8 +25,13 @@ public class ChatServer implements Runnable {
     private Thread thread = null;
     private int clientCount = 0;
     public Payload load=null;
+    
     GUI g;
 
+    private static final int k = 13;
+    private static final int[] prime1 = {11, 17, 23, 31, 41, 47, 59, 67, 73, 83, 97, 103, 109};
+    private static final int[] prime2 = {13, 19, 29, 37, 43, 53, 61, 71, 79, 89, 101, 107, 113};
+    
     public ChatServer(int port, GUI gui) {
         try {
             this.g=gui;
@@ -115,23 +120,33 @@ public class ChatServer implements Runnable {
                 g.setTextMessage("Payload ID: "+(load.id));
                 g.setTextMessage("Payload Value: "+(load.value));
                 
+                ArrayList toGet = new ArrayList();
+                ArrayList toSend = new ArrayList();
+                
                 if (pl.value == 1) {
-                    System.out.println("Recieved Set IDs");
-                    ArrayList<Integer> diff = Comparator.compare(SetInterface.setKeyList, pl.keyList);
-                    for (Integer i : diff) {
-                        System.out.println( SetInterface.sets.get(i).getName() );
+                    System.out.println("Recieved Bloom Filter");
+                    Comparator.compare(Initialize.filter, pl.filter, toGet, toSend);
+                    System.out.println("Size of toGet: " + toGet.size() + ", Size of toSend: " + toSend.size());
+                    
+                    ArrayList<String> stringsToSend = Initialize.getStrings(toSend);
+                    
+                    try {
+                        for (int i = 0; i < clientCount; i++) {
+                            clients[i].send(load);
+                        }
+                    } catch (IOException ex) {
+                        Logger.getLogger(ChatServer.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    //////////////////////////////////////
-                    /* Need to send the Hashtables here */
-                    // An ArrayList of ArrayLists
-                    // SetInterface.hashTables; // To Send
-                    //////////////////////////////////////
                 }
                 else if (pl.value == 2) {
                     System.out.println("Recieved HashTables");
                     /////////////////////////////////////////
                     /* Need to compare the hashtables here */
                     /////////////////////////////////////////
+                    ArrayList itemsToGet = new ArrayList();
+                    for (ArrayList l : SetInterface.hashTables) {
+                        itemsToGet.add(Comparator.compareHashTables(SetInterface.setKeyList, l));
+                    }
                 }
             }
         });

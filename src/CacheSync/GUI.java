@@ -349,7 +349,7 @@ public class GUI extends javax.swing.JFrame {
     private void jButtonSyncActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSyncActionPerformed
         // TODO add your handling code here:
         
-        client.send(SetInterface.setKeyList);
+        client.send(Initialize.filter);
     }//GEN-LAST:event_jButtonSyncActionPerformed
 
     private void jTextFieldPortServerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPortServerActionPerformed
@@ -402,7 +402,7 @@ public class GUI extends javax.swing.JFrame {
 
     private void jButtonPathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPathActionPerformed
         // TODO add your handling code here:
-        if (SetInterface.buildStructure(jTextFieldPath.getText()))
+        if (Initialize.buildStructure(jTextFieldPath.getText()))
             jTextAreaMessage.append("\nDone adding elements.");
     }//GEN-LAST:event_jButtonPathActionPerformed
     

@@ -18,16 +18,17 @@ import java.util.Objects;
 
 public class Comparator {
     
-    public static ArrayList compare(ArrayList<Integer> myId, ArrayList<Integer> otherId) {
-        ArrayList<Integer> discrepancies = new ArrayList();
+    public static void compare(byte[] myFilter, byte[] otherFilter, 
+            ArrayList<Integer> toGet, ArrayList<Integer> toSend) {
         
-        for (int ii = 0; ii < 26; ii++) {
-            if (!Objects.equals(myId.get(ii), otherId.get(ii))) {
-                discrepancies.add(ii);
+        for (int ii = 0; ii < myFilter.length; ii++) {
+            // They have something we don't
+            if (myFilter[ii] == 0 && otherFilter[ii] == 1) {
+                toGet.add(ii);
+            } else if (myFilter[ii] == 1 && otherFilter[ii] == 0) {
+                toSend.add(ii);
             }
         }
-        
-        return discrepancies;
     }
     
     public static ArrayList compareHashTables(ArrayList<Integer> myId, ArrayList<Integer> otherId) {

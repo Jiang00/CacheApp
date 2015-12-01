@@ -6,7 +6,6 @@
 package CacheSync;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 /**
  *
@@ -15,11 +14,11 @@ import java.util.ArrayList;
 public class Payload implements Serializable {
     public int value ;
     public String id;
-    public ArrayList keyList;
+    public byte[] filter = null;
     
-    public Payload(int v, String s, ArrayList keyList) {
+    public Payload(int v, String s, byte[] bloomFilter) {
         this.value=v;
         this.id=s;
-        this.keyList=keyList;
+        this.filter = bloomFilter;
     }
 }
