@@ -348,7 +348,7 @@ public class GUI extends javax.swing.JFrame {
 
     private void jButtonSyncActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSyncActionPerformed
         // TODO add your handling code here:
-        Payload load = new Payload(1, "Bloom Filter", Initialize.filter);
+        Payload load = new Payload(1, Initialize.filter, null);
         client.send(load);
     }//GEN-LAST:event_jButtonSyncActionPerformed
 

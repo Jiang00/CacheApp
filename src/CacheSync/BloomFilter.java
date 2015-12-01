@@ -36,6 +36,12 @@ public class BloomFilter {
         }
     }
     
+    public BloomFilter(byte[] filter, int k, int numberOfElements) {
+        this(filter.length, k);
+        set = filter;
+        size = numberOfElements;
+    }
+    
     // Function to get the byte array
     public byte[] getFilter() {
         return set;
@@ -46,6 +52,13 @@ public class BloomFilter {
     {
         return size;
     }
+    
+    /* Function to get the keySize */
+    public int getKeySize()
+    {
+        return keySize;
+    }
+    
     /* Function to get hash - MD5 */
     private int getHash(int i)
     {

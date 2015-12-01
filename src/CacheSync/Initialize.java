@@ -66,15 +66,16 @@ public class Initialize {
         return true;
     }
     
-    public static ArrayList<String> getStrings(BloomFilter otherFilter) {
+    public static ArrayList<String> getStrings(byte[] set, int keySize, int numberOfElements) {
         ArrayList<String> toSendStrings = new ArrayList();
+        
+        BloomFilter otherFilter = new BloomFilter(set, keySize, numberOfElements);
+        
         System.out.println("Processing: Please Wait...");
         for (int jj = 0; jj < strings.size(); jj++) {
             String currentString = (String) strings.get(jj);
-            if (otherFilter.contains(currentString)) {
+            if (!otherFilter.contains(currentString)) {
                 toSendStrings.add(currentString);
-                System.out.println(currentString);
-                break;
             }
         }
         System.out.println("Processing done.");

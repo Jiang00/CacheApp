@@ -12,8 +12,6 @@ package CacheSync;
 import java.net.*;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
 
 
@@ -93,24 +91,31 @@ public class ChatClient implements Runnable {
 
     public void handle(Payload msg) {
         
-        if (msg.value == 1) {
+        System.out.println("Received payload with\n" + 
+                           "\t ID: " + msg.id);
+        
+        if (msg.id == 1) {
             System.out.println("Recieved Bloom Filter");
             // Determine which strings the client needs
-            ArrayList<String> stringsToSend = Initialize.getStrings(msg.filter);
+            ArrayList<String> stringsToSend = Initialize.getStrings(msg.filter, msg.keySize, msg.numberOfElements);
             // Create the payload
-            pay = new Payload(2, "ArrayList of Strings", stringsToSend);
+            pay = new Payload(2, Initialize.filter, stringsToSend);
             // Send it
             send(pay);
         }
-        else if (msg.value == 2) {
-            System.out.println("Recieved ArrayList of Strings");
-            /* 
-               Use this ArrayList to edit our ArrayList
-               and make a new text file with that data.
-            */
+        else if (msg.id == 2) {
+            System.out.println("Recieved ArrayList of Strings and Bloom Filter");
+            System.out.println("Number of strings recieved: " + msg.strings.size());
+            // Determine which strings the client needs
+            ArrayList<String> stringsToSend = Initialize.getStrings(msg.filter, msg.keySize, msg.numberOfElements);
+            pay = new Payload(3, null, stringsToSend);
+            send(pay);
         }
-        
-        
+        else if (msg.id == 3) {
+            System.out.println("Recieved ArrayList of Strings and Bloom Filter");
+            System.out.println("Number of strings recieved: " + msg.strings.size());
+        }
+
     }
 
     public void start() throws IOException {

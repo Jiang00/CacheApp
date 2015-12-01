@@ -118,18 +118,16 @@ public class ChatServer implements Runnable {
             public void run() {
                
                 g.setTextMessage("Payload ID: "+(load.id));
-                g.setTextMessage("Payload Value: "+(load.value));
                 
                 System.out.println("Received payload with\n" + 
-                                   "\t ID: " + pl.id + "\n" +
-                                   "\t Value: " + pl.value);
+                                   "\t ID: " + pl.id);
                 
-                if (pl.value == 1) {
+                if (pl.id == 1) {
                     System.out.println("Recieved Bloom Filter");
                     // Determine which strings the client needs
-                    ArrayList<String> stringsToSend = Initialize.getStrings(pl.filter);
+                    ArrayList<String> stringsToSend = Initialize.getStrings(pl.filter, pl.keySize, pl.numberOfElements);
                     // Create the payload
-                    load = new Payload(2, "ArrayList of Strings", stringsToSend);
+                    load = new Payload(2, Initialize.filter, stringsToSend);
                     // Try to send it
                     try {
                         for (int i = 0; i < clientCount; i++) {
@@ -139,12 +137,23 @@ public class ChatServer implements Runnable {
                         Logger.getLogger(ChatServer.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-                else if (pl.value == 2) {
-                    System.out.println("Recieved ArrayList of Strings");
-                    /* 
-                       Use this ArrayList to edit our ArrayList
-                       and make a new text file with that data.
-                    */
+                else if (pl.id == 2) {
+                    System.out.println("Recieved ArrayList of Strings and Bloom Filter");
+                    System.out.println("Number of strings recieved: " + pl.strings.size());
+                    // Determine which strings the client needs
+                    ArrayList<String> stringsToSend = Initialize.getStrings(pl.filter, pl.keySize, pl.numberOfElements);
+                    load = new Payload(3, null, stringsToSend);
+                    try {
+                        for (int i = 0; i < clientCount; i++) {
+                            clients[i].send(load);
+                        }
+                    } catch (IOException ex) {
+                        Logger.getLogger(ChatServer.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                else if (pl.id == 3) {
+                    System.out.println("Recieved ArrayList of Strings and Bloom Filter");
+                    System.out.println("Number of strings recieved: " + pl.strings.size());
                 }
             }
         });

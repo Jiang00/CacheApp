@@ -13,20 +13,20 @@ import java.util.ArrayList;
  * @author shanliang
  */
 public class Payload implements Serializable {
-    public int value ;
-    public String id;
-    public BloomFilter filter = null;
+    
+    public int id ;
+    public byte[] filter = null;
+    public int keySize;
+    public int numberOfElements;
     public ArrayList<String> strings = null;
     
-    public Payload(int v, String s, BloomFilter bloomFilter) {
-        this.value=v;
-        this.id=s;
-        this.filter = bloomFilter;
-    }
-    
-    public Payload(int v, String s, ArrayList list) {
-        this.value = v;
-        this.id = s;
+    public Payload(int v, BloomFilter bloomFilter, ArrayList<String> list) {
+        this.id = v;
+        if (bloomFilter != null) {
+            this.filter = bloomFilter.getFilter();
+            this.keySize = bloomFilter.getKeySize();
+            this.numberOfElements = bloomFilter.getSize();
+        }
         this.strings = list;
     }
 }
