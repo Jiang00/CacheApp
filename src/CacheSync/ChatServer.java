@@ -25,8 +25,13 @@ public class ChatServer implements Runnable {
     private Thread thread = null;
     private int clientCount = 0;
     public Payload load=null;
+    
     GUI g;
 
+    private static final int k = 13;
+    private static final int[] prime1 = {11, 17, 23, 31, 41, 47, 59, 67, 73, 83, 97, 103, 109};
+    private static final int[] prime2 = {13, 19, 29, 37, 43, 53, 61, 71, 79, 89, 101, 107, 113};
+    
     public ChatServer(int port, GUI gui) {
         try {
             this.g=gui;
@@ -113,25 +118,43 @@ public class ChatServer implements Runnable {
             public void run() {
                
                 g.setTextMessage("Payload ID: "+(load.id));
-                g.setTextMessage("Payload Value: "+(load.value));
                 
-                if (pl.value == 1) {
-                    System.out.println("Recieved Set IDs");
-                    ArrayList<Integer> diff = Comparator.compare(SetInterface.setKeyList, pl.keyList);
-                    for (Integer i : diff) {
-                        System.out.println( SetInterface.sets.get(i).getName() );
+                System.out.println("Received payload with\n" + 
+                                   "\t ID: " + pl.id);
+                
+                if (pl.id == 1) {
+                    System.out.println("Recieved Bloom Filter");
+                    // Determine which strings the client needs
+                    ArrayList<String> stringsToSend = Initialize.getStrings(pl.filter, pl.keySize, pl.numberOfElements);
+                    // Create the payload
+                    load = new Payload(2, Initialize.filter, stringsToSend);
+                    // Try to send it
+                    try {
+                        for (int i = 0; i < clientCount; i++) {
+                            clients[i].send(load);
+                        }
+                    } catch (IOException ex) {
+                        Logger.getLogger(ChatServer.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    //////////////////////////////////////
-                    /* Need to send the Hashtables here */
-                    // An ArrayList of ArrayLists
-                    // SetInterface.hashTables; // To Send
-                    //////////////////////////////////////
                 }
-                else if (pl.value == 2) {
-                    System.out.println("Recieved HashTables");
-                    /////////////////////////////////////////
-                    /* Need to compare the hashtables here */
-                    /////////////////////////////////////////
+                else if (pl.id == 2) {
+                    System.out.println("Recieved ArrayList of Strings and Bloom Filter");
+                    System.out.println("Number of strings recieved: " + pl.strings.size());
+                    // Determine which strings the client needs
+                    ArrayList<String> stringsToSend = Initialize.getStrings(pl.filter, pl.keySize, pl.numberOfElements);
+                    load = new Payload(3, null, stringsToSend);
+                    try {
+                        for (int i = 0; i < clientCount; i++) {
+                            clients[i].send(load);
+                        }
+                    } catch (IOException ex) {
+                        Logger.getLogger(ChatServer.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                else if (pl.id == 3) {
+                    System.out.println("Recieved ArrayList of Strings");
+                    System.out.println("Number of strings recieved: " + pl.strings.size());
+                    Initialize.addStrings(pl.strings);
                 }
             }
         });

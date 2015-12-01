@@ -41,11 +41,11 @@ public class ChatServerThread extends Thread {
 
     }
 
-    public void send(String msg) throws IOException {
+    public void send(Payload msg) throws IOException {
         try {
             
 //                 pay=new Payload(1, "Set IDs", keyList);
-                    oos.writeObject(pay);
+                    oos.writeObject(msg);
                     oos.flush();
 //            streamOut.writeUTF(msg);
 //            streamOut.flush();
