@@ -347,7 +347,12 @@ public class GUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         //get text from field and put in Trie and strings list?
         String entry = jTextFieldSearchBar.getText();
-        Initialize.insert(entry);
+        
+        //Convert to lower case with no spaces
+        entry = entry.toLowerCase();
+        entry = entry.replaceAll("\\s+","");
+        
+        Initialize.insert(entry.toLowerCase());
         jTextFieldSearchBar.setText("");
     }//GEN-LAST:event_jButtonSearchActionPerformed
 
@@ -430,7 +435,11 @@ private void getSuggestions(String typed){
          
         //Get array of current suggestions and build output string
         if (typed != null){
-        currentSuggestions = Initialize.st.keysWithPrefixWeight(typed.toLowerCase());
+        
+        typed = typed.toLowerCase();
+        typed = typed.replaceAll("\\s+","");
+        
+        currentSuggestions = Initialize.st.keysWithPrefixWeight(typed);
         for (String s: currentSuggestions) {
                 if (s==null && topSuggestions == null)      topSuggestions = "No further suggestions\n";
                 if (s==null && topSuggestions != null)      topSuggestions += "\n";
