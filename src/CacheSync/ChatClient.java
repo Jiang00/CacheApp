@@ -69,13 +69,11 @@ public class ChatClient implements Runnable {
         }
     }
 
-    public void send(byte[] filter){
+    public void send(BloomFilter filter){
             try {
-//                streamOut.writeUTF(g.getTextSend());
-//                streamOut.flush();
-                pay=new Payload(1, "Bloom Filter", filter);
-                    oos.writeObject(pay);
-                    oos.flush();
+                pay = new Payload(1, "Bloom Filter", filter);
+                oos.writeObject(pay);
+                oos.flush();
             } catch (IOException ioe) {
                 System.out.println("Sending error: " + ioe.getMessage());
 

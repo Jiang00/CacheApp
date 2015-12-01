@@ -125,10 +125,7 @@ public class ChatServer implements Runnable {
                 
                 if (pl.value == 1) {
                     System.out.println("Recieved Bloom Filter");
-                    Comparator.compare(Initialize.filter, pl.filter, toGet, toSend);
-                    System.out.println("Size of toGet: " + toGet.size() + ", Size of toSend: " + toSend.size());
-                    
-                    ArrayList<String> stringsToSend = Initialize.getStrings(toSend);
+                    ArrayList<String> stringsToSend = Initialize.getStrings(pl.filter);
                     
                     try {
                         for (int i = 0; i < clientCount; i++) {

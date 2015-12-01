@@ -14,9 +14,9 @@ import java.io.Serializable;
 public class Payload implements Serializable {
     public int value ;
     public String id;
-    public byte[] filter = null;
+    public BloomFilter filter = null;
     
-    public Payload(int v, String s, byte[] bloomFilter) {
+    public Payload(int v, String s, BloomFilter bloomFilter) {
         this.value=v;
         this.id=s;
         this.filter = bloomFilter;
