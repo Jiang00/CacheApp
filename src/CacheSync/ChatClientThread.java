@@ -11,6 +11,8 @@ package CacheSync;
  */
 import java.net.*;
 import java.io.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
 
 public class ChatClientThread extends Thread {
@@ -78,7 +80,11 @@ public class ChatClientThread extends Thread {
 
     @Override
     public void run() {
-        listen();
+        try {
+            listen();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ChatClientThread.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void listen() throws ClassNotFoundException {
