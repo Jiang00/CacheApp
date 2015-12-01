@@ -12,6 +12,8 @@ package CacheSync;
 import java.net.*;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
 
 
@@ -69,22 +71,19 @@ public class ChatClient implements Runnable {
         }
     }
 
-    public void send(BloomFilter filter){
-            try {
-                pay = new Payload(1, "Bloom Filter", filter);
-                oos.writeObject(pay);
-                oos.flush();
-            } catch (IOException ioe) {
-                System.out.println("Sending error: " + ioe.getMessage());
+    public void send(Payload pay){
+        try {
+            oos.writeObject(pay);
+            oos.flush();
+        } catch (IOException ioe) {
+            System.out.println("Sending error: " + ioe.getMessage());
 
-                SwingUtilities.invokeLater(new Runnable() {
-                    public void run() {
-                        g.setTextMessage("Establishing connection. Please wait ...");
-                    }
-                });
-            }
-        
-        
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    g.setTextMessage("Establishing connection. Please wait ...");
+                }
+            });
+        }
     }
     
     @Override
@@ -95,22 +94,20 @@ public class ChatClient implements Runnable {
     public void handle(Payload msg) {
         
         if (msg.value == 1) {
-            System.out.println("Recieved Set IDs");
-            // Compare filter
-            
-            //////////////////////////////////////
-            /* Need to send the Hashtables here */
-            // An ArrayList of ArrayLists
-            // SetInterface.hashTables; // To Send
-            //////////////////////////////////////
-            
+            System.out.println("Recieved Bloom Filter");
+            // Determine which strings the client needs
+            ArrayList<String> stringsToSend = Initialize.getStrings(msg.filter);
+            // Create the payload
+            pay = new Payload(2, "ArrayList of Strings", stringsToSend);
+            // Send it
+            send(pay);
         }
         else if (msg.value == 2) {
-            System.out.println("Recieved HashTables");
-            /////////////////////////////////////////
-            /* Need to compare the hashtables here */
-            /////////////////////////////////////////
-            
+            System.out.println("Recieved ArrayList of Strings");
+            /* 
+               Use this ArrayList to edit our ArrayList
+               and make a new text file with that data.
+            */
         }
         
         

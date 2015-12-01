@@ -6,20 +6,29 @@ import java.nio.*;
 
 /**
  *
+ * @title ENG EC 504 Final Project
  * @author shantanubobhate
+ * @date December 1st, 2015
+ * 
  */
 public class BloomFilter {
 
+    // The byte array
     private byte[] set;
+    // The number of hash functions, the size of the byte array and the number of elements added
     private int keySize, setSize, size;
+    // The MD5 hash
     private MessageDigest md;
     
+    // Constructor
     public BloomFilter(int capacity, int k) {
+        // Initialize sizes and byte array
         setSize = capacity;
         set = new byte[setSize];
         keySize = k;
         size = 0;
         
+        // Try to create an instance of the MD5 hash
         try {
             md = MessageDigest.getInstance("MD5");
         } catch (NoSuchAlgorithmException e) {
@@ -27,6 +36,7 @@ public class BloomFilter {
         }
     }
     
+    // Function to get the byte array
     public byte[] getFilter() {
         return set;
     }

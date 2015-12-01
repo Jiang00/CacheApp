@@ -120,13 +120,17 @@ public class ChatServer implements Runnable {
                 g.setTextMessage("Payload ID: "+(load.id));
                 g.setTextMessage("Payload Value: "+(load.value));
                 
-                ArrayList toGet = new ArrayList();
-                ArrayList toSend = new ArrayList();
+                System.out.println("Received payload with\n" + 
+                                   "\t ID: " + pl.id + "\n" +
+                                   "\t Value: " + pl.value);
                 
                 if (pl.value == 1) {
                     System.out.println("Recieved Bloom Filter");
+                    // Determine which strings the client needs
                     ArrayList<String> stringsToSend = Initialize.getStrings(pl.filter);
-                    
+                    // Create the payload
+                    load = new Payload(2, "ArrayList of Strings", stringsToSend);
+                    // Try to send it
                     try {
                         for (int i = 0; i < clientCount; i++) {
                             clients[i].send(load);
@@ -136,14 +140,11 @@ public class ChatServer implements Runnable {
                     }
                 }
                 else if (pl.value == 2) {
-                    System.out.println("Recieved HashTables");
-                    /////////////////////////////////////////
-                    /* Need to compare the hashtables here */
-                    /////////////////////////////////////////
-                    ArrayList itemsToGet = new ArrayList();
-                    for (ArrayList l : SetInterface.hashTables) {
-                        itemsToGet.add(Comparator.compareHashTables(SetInterface.setKeyList, l));
-                    }
+                    System.out.println("Recieved ArrayList of Strings");
+                    /* 
+                       Use this ArrayList to edit our ArrayList
+                       and make a new text file with that data.
+                    */
                 }
             }
         });
