@@ -430,7 +430,6 @@ public class GUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (Initialize.buildStructure(jTextFieldPath.getText(), this))
         {
-            jTextAreaMessage.append("\nDone adding elements.");
             jTabbedPane1.setEnabled(true);
             jButtonSearch.setEnabled(true);
         }
