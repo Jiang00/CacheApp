@@ -104,9 +104,7 @@ public class ChatServer implements Runnable {
     public synchronized void handle(int ID, Payload pl) throws IOException {
         this.load = pl;
         
-           SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-               
+
                 g.setTextMessage("Received payload with\n" + 
                                    "\t ID: " + pl.id);
                 
@@ -127,8 +125,6 @@ public class ChatServer implements Runnable {
                     System.out.println("Number of strings recieved: " + pl.strings.size());
                     Initialize.addStrings(pl.strings);
                 }
-            }
-        });
     }
 
     public synchronized void remove(int ID) throws IOException {
