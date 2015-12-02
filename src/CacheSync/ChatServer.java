@@ -1,12 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package CacheSync;
 
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -24,13 +18,11 @@ public class ChatServer implements Runnable {
     private ServerSocket server = null;
     private Thread thread = null;
     private int clientCount = 0;
-    public Payload load=null;
+    public Payload load = null;
     
     GUI g;
 
     private static final int k = 13;
-    private static final int[] prime1 = {11, 17, 23, 31, 41, 47, 59, 67, 73, 83, 97, 103, 109};
-    private static final int[] prime2 = {13, 19, 29, 37, 43, 53, 61, 71, 79, 89, 101, 107, 113};
     
     public ChatServer(int port, GUI gui) {
         try {
@@ -112,12 +104,13 @@ public class ChatServer implements Runnable {
     }
 
     public synchronized void handle(int ID, Payload pl) throws IOException {
-        this.load =pl;
+        this.load = pl;
         
            SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                
-                g.setTextMessage("Payload ID: "+(load.id));
+                g.setTextMessage("Received payload with\n" + 
+                                   "\t ID: " + pl.id);
                 
                 System.out.println("Received payload with\n" + 
                                    "\t ID: " + pl.id);
@@ -133,24 +126,13 @@ public class ChatServer implements Runnable {
                         for (int i = 0; i < clientCount; i++) {
                             clients[i].send(load);
                         }
+//                        int bytesSent = load.filter.size()/8000 + ;
+//                        g.setTextMessage("Sent " + () + 
+//                                         );
                     } catch (IOException ex) {
                         Logger.getLogger(ChatServer.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-//                else if (pl.id == 2) {
-//                    System.out.println("Recieved ArrayList of Strings and Bloom Filter");
-//                    System.out.println("Number of strings recieved: " + pl.strings.size());
-//                    // Determine which strings the client needs
-//                    ArrayList<String> stringsToSend = Initialize.getStrings(pl.filter, pl.keySize, pl.numberOfElements);
-//                    load = new Payload(3, null, stringsToSend);
-//                    try {
-//                        for (int i = 0; i < clientCount; i++) {
-//                            clients[i].send(load);
-//                        }
-//                    } catch (IOException ex) {
-//                        Logger.getLogger(ChatServer.class.getName()).log(Level.SEVERE, null, ex);
-//                    }
-//                }
                 else if (pl.id == 3) {
                     System.out.println("Recieved ArrayList of Strings and Bloom Filter");
                     System.out.println("Number of strings recieved: " + pl.strings.size());

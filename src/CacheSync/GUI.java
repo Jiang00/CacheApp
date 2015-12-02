@@ -8,6 +8,7 @@ package CacheSync;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -26,10 +27,9 @@ public class GUI extends javax.swing.JFrame {
         jButtonDisconnect.setEnabled(false);
         jTextAreaMessage.setEditable(false);
         jTextAreaSuggestion.setEditable(false);
-        jButtonConnect.setEnabled(false);
         jButtonSearch.setEnabled(false);
         jButtonDisconnectServer.setEnabled(false);
-        
+        SwingWorker.getGUI(this);
         
         
         jTextFieldSearchBar.getDocument().addDocumentListener(new DocumentListener(){
@@ -98,6 +98,8 @@ public class GUI extends javax.swing.JFrame {
         jTextAreaSuggestion = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jTabbedPane1.setEnabled(false);
 
         jLabel1.setText("IP Address:");
 
@@ -372,27 +374,41 @@ public class GUI extends javax.swing.JFrame {
 
     private void jButtonDisconnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDisconnectActionPerformed
         // TODO add your handling code here:
+        client.stop();
         jButtonConnect.setEnabled(true);
         jButtonDisconnect.setEnabled(false);
-        client.stop();
+        jButtonSync.setEnabled(false);
     }//GEN-LAST:event_jButtonDisconnectActionPerformed
 
     private void jButtonConnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConnectActionPerformed
-            client=new ChatClient(jTextFieldIP.getText(), Integer.parseInt(jTextFieldPort.getText()), this);
-                jButtonSync.setEnabled(true);
+        try {
+            int portNumber = Integer.parseInt(jTextFieldPort.getText());
+            client = new ChatClient(jTextFieldIP.getText(), portNumber, this);
+            if (client.isConnected()) {
                 jButtonConnect.setEnabled(false);
                 jButtonDisconnect.setEnabled(true);
-                
+                jButtonSync.setEnabled(true);
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(jTabbedPane1,
+            "Port Number can only be a number",
+            "Input Error",
+            JOptionPane.ERROR_MESSAGE); 
+        }   
     }//GEN-LAST:event_jButtonConnectActionPerformed
 
     private void jButtonConnectServerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConnectServerActionPerformed
-        // TODO add your handling code here:
-        server = new ChatServer(Integer.parseInt(jTextFieldPortServer.getText()), GUI.this);
-        jButtonConnect.setEnabled(true);
-        jPanelCache.setEnabled(true);
-        jButtonSearch.setEnabled(true);
-        jButtonDisconnectServer.setEnabled(true);
-        jButtonConnectServer.setEnabled(false);
+        try {
+            int portNumber = Integer.parseInt(jTextFieldPortServer.getText());
+            server = new ChatServer(portNumber, GUI.this);
+            jButtonDisconnectServer.setEnabled(true);
+            jButtonConnectServer.setEnabled(false);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(jTabbedPane1,
+            "Port Number can only be a number",
+            "Input Error",
+            JOptionPane.ERROR_MESSAGE); 
+        }
     }//GEN-LAST:event_jButtonConnectServerActionPerformed
 
     private void jButtonDisconnectServerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDisconnectServerActionPerformed
@@ -412,8 +428,12 @@ public class GUI extends javax.swing.JFrame {
 
     private void jButtonPathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPathActionPerformed
         // TODO add your handling code here:
-        if (Initialize.buildStructure(jTextFieldPath.getText()))
+        if (Initialize.buildStructure(jTextFieldPath.getText(), this))
+        {
             jTextAreaMessage.append("\nDone adding elements.");
+            jTabbedPane1.setEnabled(true);
+            jButtonSearch.setEnabled(true);
+        }
     }//GEN-LAST:event_jButtonPathActionPerformed
     
     public void setTextMessage(String message){
@@ -427,6 +447,13 @@ public class GUI extends javax.swing.JFrame {
 //    }
     public int getTextPort(){
        return Integer.parseInt(jTextFieldPort.getText());
+    }
+    
+    public void showErrorMessage() {
+        JOptionPane.showMessageDialog(jTabbedPane1,
+        "Could not open File, check file name.",
+        "File Error",
+        JOptionPane.ERROR_MESSAGE); 
     }
     
 private void getSuggestions(String typed){

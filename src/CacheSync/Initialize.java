@@ -5,8 +5,10 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.BitSet;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -24,16 +26,12 @@ public class Initialize {
     private static FileReader myFileReader = null;
     // The bloom filter
     public static final BloomFilter filter = new BloomFilter(SIZE, k);
-    // Hashmap to store strings and their hash values
-    private static HashMap data;
-    // Hashmap to store strings and their popularities
-    private static HashMap popularities;
     
     private static final ArrayList<String> strings = new ArrayList();
     
     public static TrieST<Integer> st = new TrieST<>();
     
-    public static boolean buildStructure(String fileName) {
+    public static boolean buildStructure(String fileName, GUI g) {
         // NOTE: Set boolean flag to see data to help debug
         boolean debug = false;
         
@@ -52,6 +50,11 @@ public class Initialize {
         // Catch any exceptions
         } catch (IOException | NumberFormatException e) {
             System.out.println(e);
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    g.showErrorMessage();
+                }
+            });
             return false;
         } finally {
             // Try to close the file
@@ -66,28 +69,36 @@ public class Initialize {
 
         // Print message if sets were built successfully
         System.out.println("Done adding elements.");
-        
+        SwingWorker.setGUIText("Done adding elements.");
         return true;
     }
     
-    public static ArrayList<String> getStrings(byte[] set, int keySize, int numberOfElements) {
+    public static ArrayList<String> getStrings(BitSet set, int keySize, int numberOfElements) {
         ArrayList<String> toSendStrings = new ArrayList();
+        int bytesOfString = 0;
+        Charset utf8 = Charset.forName("UTF-8");
         
         BloomFilter otherFilter = new BloomFilter(set, keySize, numberOfElements);
         
         System.out.println("Processing: Please Wait...");
+        SwingWorker.setGUIText("Processing: Please Wait...");
         for (int jj = 0; jj < strings.size(); jj++) {
             String currentString = (String) strings.get(jj);
             if (!otherFilter.contains(currentString)) {
                 toSendStrings.add(currentString);
+                bytesOfString += currentString.getBytes(utf8).length;
             }
         }
         System.out.println("Processing done.");
+        System.out.println("Preparing to send " + bytesOfString + " bytes of data.");
+        SwingWorker.setGUIText("Processing done.");
+        SwingWorker.setGUIText("Preparing to send " + bytesOfString + " bytes of data.");
         return toSendStrings;
     }
     
     public static void addStrings(ArrayList<String> toAdd) {
         System.out.println("Refreshing Data Structure...");
+        SwingWorker.setGUIText("Refreshing Data Structure...");
         int ecount = strings.size() + toAdd.size();
         for (String s : toAdd) {
             if (!strings.contains(s)) {
@@ -97,6 +108,9 @@ public class Initialize {
         }
         int acount = strings.size();
         int dcount = ecount-acount;
+        SwingWorker.setGUIText("Done Refreshing");
+        SwingWorker.setGUIText("Total number of false positives: " + dcount);
+        SwingWorker.setGUIText("Constructing File");
         System.out.println("Done Refreshing");
         System.out.println("Total number of false positives: " + dcount);
         System.out.println("Constructing File");
@@ -123,6 +137,7 @@ public class Initialize {
                 System.out.println(e);
             }
         }
+         SwingWorker.setGUIText("File Constructed");
         System.out.println("File Constructed");
     }
     
@@ -132,12 +147,14 @@ public class Initialize {
            strings.add(entry);
            filter.add(entry);
            System.out.println("Entry added");
+           SwingWorker.setGUIText("Entry added");
         }
         else {
             int cweight = st.get(entry) + 1;
             st.put(entry, null);
             st.put(entry,cweight);
             System.out.println("Updated value to " + st.get(entry));
+            SwingWorker.setGUIText("Updated value to " + st.get(entry));
         }
     }
 }
