@@ -14,6 +14,7 @@ import java.util.BitSet;
  */
 public class BloomFilter {
 
+    
     // The byte array
     private BitSet set;
     // The number of hash functions, the size of the byte array and the number of elements added
