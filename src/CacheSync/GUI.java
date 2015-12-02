@@ -425,7 +425,7 @@ public class GUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         Payload load = new Payload(1, Initialize.filter, null);
         
-        client.send(load);
+        server.send(load);
     }//GEN-LAST:event_jButtonSyncActionPerformed
 
     private void jTextFieldPortServerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPortServerActionPerformed
