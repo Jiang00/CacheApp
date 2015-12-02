@@ -19,13 +19,13 @@ public class ChatClient implements Runnable {
 
     private Socket socket = null;
     private Thread thread = null;
-   // private DataInputStream console = null;
-   // private DataOutputStream streamOut = null;
     OutputStream os = null;
-    ObjectOutputStream oos= null;
-    private Payload pay=null;
+    ObjectOutputStream oos = null;
+    private Payload pay = null;
     private ChatClientThread client = null;
-    private Payload payReturn=null;
+    private Payload payReturn = null;
+    // Flag to determine whether this application is connected to someone
+    private boolean isConnected = false;
     
     GUI g;
 
@@ -42,6 +42,7 @@ public class ChatClient implements Runnable {
        try {
             socket = new Socket(serverName, serverPort);
             System.out.println("Connected: " + socket);
+            isConnected = true;
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
                     g.setTextMessage("Connected: " + socket);
@@ -50,7 +51,7 @@ public class ChatClient implements Runnable {
             start();
         } catch (UnknownHostException uhe) {
             System.out.println("Host unknown: " + uhe.getMessage());
-
+            
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
                     g.setTextMessage("Host unknown: " + uhe.getMessage());
@@ -69,10 +70,18 @@ public class ChatClient implements Runnable {
         }
     }
 
-    public void send(Payload pay){
+    public void send(Payload pay) {
         try {
             oos.writeObject(pay);
             oos.flush();
+            System.out.println("Sent Bloom Filter Successfully.");
+            if (pay.filter != null) {
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+                        g.setTextMessage("Sent " + (pay.filter.size() / 8000) + " kilo bytes of data.");
+                    }
+                });
+            }
         } catch (IOException ioe) {
             System.out.println("Sending error: " + ioe.getMessage());
 
@@ -106,10 +115,8 @@ public class ChatClient implements Runnable {
     }
 
     public void start() throws IOException {
-       // console = new DataInputStream(System.in);
-       // streamOut = new DataOutputStream(socket.getOutputStream());
-                os=socket.getOutputStream();
-                oos = new ObjectOutputStream(os);
+        os=socket.getOutputStream();
+        oos = new ObjectOutputStream(os);
         if (thread == null) {
             client = new ChatClientThread(this, socket, this.g);
             thread = new Thread(this);
@@ -121,11 +128,9 @@ public class ChatClient implements Runnable {
         if (thread != null) {
             client.close();
             thread = null;
+            isConnected = false;
         }
         try {
-//            if (console != null) {
-//                console.close();
-//            }
             if (os != null) {
                 os.close();
             }
@@ -145,6 +150,10 @@ public class ChatClient implements Runnable {
         }
     }
 
+    public boolean isConnected() {
+        return isConnected;
+    }
+    
     public static void main(String args[]) {
         GUI gui = new GUI();
 

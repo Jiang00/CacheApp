@@ -5,8 +5,9 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.BitSet;
 import javax.swing.SwingUtilities;
 
 /**
@@ -72,8 +73,10 @@ public class Initialize {
         return true;
     }
     
-    public static ArrayList<String> getStrings(byte[] set, int keySize, int numberOfElements) {
+    public static ArrayList<String> getStrings(BitSet set, int keySize, int numberOfElements) {
         ArrayList<String> toSendStrings = new ArrayList();
+        int bytesOfString = 0;
+        Charset utf8 = Charset.forName("UTF-8");
         
         BloomFilter otherFilter = new BloomFilter(set, keySize, numberOfElements);
         
@@ -82,9 +85,11 @@ public class Initialize {
             String currentString = (String) strings.get(jj);
             if (!otherFilter.contains(currentString)) {
                 toSendStrings.add(currentString);
+                bytesOfString += currentString.getBytes(utf8).length;
             }
         }
         System.out.println("Processing done.");
+        System.out.println("Preparing to send " + bytesOfString + " bytes of data.");
         return toSendStrings;
     }
     
