@@ -440,10 +440,12 @@ public class GUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(jCheckBoxSelect.isSelected()){
         client.stop();
+        clientConnected=false;
 
         }
          if(jCheckBoxSelect2.isSelected()){
         client2.stop();
+        clientConnected2=false;
 
         }
     }//GEN-LAST:event_jButtonDisconnectActionPerformed
@@ -451,14 +453,15 @@ public class GUI extends javax.swing.JFrame {
     private void jButtonConnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConnectActionPerformed
             
         jButtonDisconnect.setEnabled(true);
-       if(jCheckBoxSelect.isSelected()){
+       if(jCheckBoxSelect.isSelected()&&clientConnected==false){
         try {
             int portNumber = Integer.parseInt(jTextFieldPort.getText());
             client = new ChatClient(jTextFieldIP.getText(), portNumber, this);
             if (client.isConnected()) {
-
+                 clientConnected=true;
                 jButtonSync.setEnabled(true);
             }
+            
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(jTabbedPane1,
             "Port Number can only be a number",
@@ -466,11 +469,12 @@ public class GUI extends javax.swing.JFrame {
             JOptionPane.ERROR_MESSAGE); 
         }   
        }
-    if(jCheckBoxSelect2.isSelected()){
+    if(jCheckBoxSelect2.isSelected()&&clientConnected==false){
         try {
             int portNumber = Integer.parseInt(jTextFieldPort2.getText());
             client = new ChatClient(jTextFieldIP2.getText(), portNumber, this);
             if (client.isConnected()) {
+                clientConnected2=true;
                 jButtonSync.setEnabled(true);
             }
         } catch (NumberFormatException e) {
@@ -647,4 +651,6 @@ private void getSuggestions(String typed){
     ChatServer server;
     private String[] currentSuggestions;
     private String topSuggestions; 
+    private boolean clientConnected= false;
+    private boolean clientConnected2=false;
 }
