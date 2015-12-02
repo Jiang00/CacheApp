@@ -89,7 +89,18 @@ public class ChatServer implements Runnable {
         }
         return -1;
     }
+    
+    public void send(Payload load){
+        try {
+                        for (int i = 0; i < clientCount; i++) {
+                            clients[i].send(load);
+                        }
 
+                    } catch (IOException ex) {
+                        Logger.getLogger(ChatServer.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+    }
+    
     public synchronized void handle(int ID, Payload pl) throws IOException {
         this.load = pl;
         
@@ -109,16 +120,7 @@ public class ChatServer implements Runnable {
                     // Create the payload
                     load = new Payload(2, Initialize.filter, stringsToSend);
                     // Try to send it
-                    try {
-                        for (int i = 0; i < clientCount; i++) {
-                            clients[i].send(load);
-                        }
-//                        int bytesSent = load.filter.size()/8000 + ;
-//                        g.setTextMessage("Sent " + () + 
-//                                         );
-                    } catch (IOException ex) {
-                        Logger.getLogger(ChatServer.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                    send(load);
                 }
                 else if (pl.id == 3) {
                     System.out.println("Recieved ArrayList of Strings and Bloom Filter");

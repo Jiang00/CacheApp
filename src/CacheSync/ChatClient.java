@@ -42,7 +42,7 @@ public class ChatClient implements Runnable {
        try {
                        
             socket = new Socket(serverName, serverPort);
-            socket.setSoTimeout(5*1000);
+
             System.out.println("Connected: " + socket);
             isConnected = true;
             SwingUtilities.invokeLater(new Runnable() {
