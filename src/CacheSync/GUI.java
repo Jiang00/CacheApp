@@ -469,11 +469,11 @@ public class GUI extends javax.swing.JFrame {
             JOptionPane.ERROR_MESSAGE); 
         }   
        }
-    if(jCheckBoxSelect2.isSelected()&&clientConnected==false){
+    if(jCheckBoxSelect2.isSelected()&&clientConnected2==false){
         try {
             int portNumber = Integer.parseInt(jTextFieldPort2.getText());
-            client = new ChatClient(jTextFieldIP2.getText(), portNumber, this);
-            if (client.isConnected()) {
+            client2 = new ChatClient(jTextFieldIP2.getText(), portNumber, this);
+            if (client2.isConnected()) {
                 clientConnected2=true;
                 jButtonSync.setEnabled(true);
             }
