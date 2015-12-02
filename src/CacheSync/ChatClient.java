@@ -36,7 +36,7 @@ public class ChatClient implements Runnable {
         System.out.println("Establishing connection. Please wait ...");
 
 
-                SwingWorker.setGUIText("Establishing connection. Please wait ...");
+        SwingWorker.setGUIText("Establishing connection. Please wait ...");
   
  
        try {
