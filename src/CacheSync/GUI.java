@@ -390,7 +390,6 @@ public class GUI extends javax.swing.JFrame {
         server = new ChatServer(Integer.parseInt(jTextFieldPortServer.getText()), GUI.this);
         jButtonConnect.setEnabled(true);
         jPanelCache.setEnabled(true);
-        jButtonSearch.setEnabled(true);
         jButtonDisconnectServer.setEnabled(true);
         jButtonConnectServer.setEnabled(false);
     }//GEN-LAST:event_jButtonConnectServerActionPerformed
@@ -413,7 +412,10 @@ public class GUI extends javax.swing.JFrame {
     private void jButtonPathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPathActionPerformed
         // TODO add your handling code here:
         if (Initialize.buildStructure(jTextFieldPath.getText()))
+        {
             jTextAreaMessage.append("\nDone adding elements.");
+            jButtonSearch.setEnabled(true);
+        }
     }//GEN-LAST:event_jButtonPathActionPerformed
     
     public void setTextMessage(String message){
