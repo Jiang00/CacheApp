@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -24,16 +25,12 @@ public class Initialize {
     private static FileReader myFileReader = null;
     // The bloom filter
     public static final BloomFilter filter = new BloomFilter(SIZE, k);
-    // Hashmap to store strings and their hash values
-    private static HashMap data;
-    // Hashmap to store strings and their popularities
-    private static HashMap popularities;
     
     private static final ArrayList<String> strings = new ArrayList();
     
     public static TrieST<Integer> st = new TrieST<>();
     
-    public static boolean buildStructure(String fileName) {
+    public static boolean buildStructure(String fileName, GUI g) {
         // NOTE: Set boolean flag to see data to help debug
         boolean debug = false;
         
@@ -52,6 +49,11 @@ public class Initialize {
         // Catch any exceptions
         } catch (IOException | NumberFormatException e) {
             System.out.println(e);
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    g.showErrorMessage();
+                }
+            });
             return false;
         } finally {
             // Try to close the file
