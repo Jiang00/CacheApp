@@ -29,7 +29,7 @@ public class GUI extends javax.swing.JFrame {
         jTextAreaSuggestion.setEditable(false);
         jButtonSearch.setEnabled(false);
         jButtonDisconnectServer.setEnabled(false);
-        
+        SwingWorker.getGUI(this);
         
         
         jTextFieldSearchBar.getDocument().addDocumentListener(new DocumentListener(){
