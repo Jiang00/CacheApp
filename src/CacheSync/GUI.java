@@ -5,7 +5,6 @@
  */
 package CacheSync;
 
-import java.awt.Component;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,7 +27,6 @@ public class GUI extends javax.swing.JFrame {
         jButtonDisconnect.setEnabled(false);
         jTextAreaMessage.setEditable(false);
         jTextAreaSuggestion.setEditable(false);
-        jButtonConnect.setEnabled(false);
         jButtonSearch.setEnabled(false);
         jButtonDisconnectServer.setEnabled(false);
         
@@ -376,18 +374,21 @@ public class GUI extends javax.swing.JFrame {
 
     private void jButtonDisconnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDisconnectActionPerformed
         // TODO add your handling code here:
+        client.stop();
         jButtonConnect.setEnabled(true);
         jButtonDisconnect.setEnabled(false);
-        client.stop();
+        jButtonSync.setEnabled(false);
     }//GEN-LAST:event_jButtonDisconnectActionPerformed
 
     private void jButtonConnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConnectActionPerformed
         try {
             int portNumber = Integer.parseInt(jTextFieldPort.getText());
-            client=new ChatClient(jTextFieldIP.getText(), portNumber, this);
-            jButtonConnect.setEnabled(false);
-            jButtonDisconnect.setEnabled(true);
-            jButtonSync.setEnabled(true);
+            client = new ChatClient(jTextFieldIP.getText(), portNumber, this);
+            if (client.isConnected()) {
+                jButtonConnect.setEnabled(false);
+                jButtonDisconnect.setEnabled(true);
+                jButtonSync.setEnabled(true);
+            }
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(jTabbedPane1,
             "Port Number can only be a number",
@@ -400,7 +401,6 @@ public class GUI extends javax.swing.JFrame {
         try {
             int portNumber = Integer.parseInt(jTextFieldPortServer.getText());
             server = new ChatServer(portNumber, GUI.this);
-            jButtonConnect.setEnabled(true);
             jButtonDisconnectServer.setEnabled(true);
             jButtonConnectServer.setEnabled(false);
         } catch (NumberFormatException e) {

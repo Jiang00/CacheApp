@@ -3,6 +3,7 @@ package CacheSync;
 import java.security.*;
 import java.math.*;
 import java.nio.*;
+import java.util.BitSet;
 
 /**
  *
@@ -14,7 +15,7 @@ import java.nio.*;
 public class BloomFilter {
 
     // The byte array
-    private byte[] set;
+    private BitSet set;
     // The number of hash functions, the size of the byte array and the number of elements added
     private int keySize, setSize, size;
     // The MD5 hash
@@ -24,7 +25,7 @@ public class BloomFilter {
     public BloomFilter(int capacity, int k) {
         // Initialize sizes and byte array
         setSize = capacity;
-        set = new byte[setSize];
+        set = new BitSet(setSize);
         keySize = k;
         size = 0;
         
@@ -36,14 +37,14 @@ public class BloomFilter {
         }
     }
     
-    public BloomFilter(byte[] filter, int k, int numberOfElements) {
-        this(filter.length, k);
+    public BloomFilter(BitSet filter, int k, int numberOfElements) {
+        this(filter.size(), k);
         set = filter;
         size = numberOfElements;
     }
     
     // Function to get the byte array
-    public byte[] getFilter() {
+    public BitSet getFilter() {
         return set;
     }
     
@@ -65,7 +66,7 @@ public class BloomFilter {
         md.reset();
         byte[] bytes = ByteBuffer.allocate(4).putInt(i).array();
         md.update(bytes, 0, bytes.length);
-        return Math.abs(new BigInteger(1, md.digest()).intValue()) % (set.length - 1);
+        return Math.abs(new BigInteger(1, md.digest()).intValue()) % (set.size() - 1);
     }
     
     /* Function to add an object */
@@ -73,7 +74,7 @@ public class BloomFilter {
     {
         int[] tmpset = getSetArray(obj);
         for (int i : tmpset)
-            set[i] = 1;
+            set.set(i, true);
         size++;
     }
     
@@ -82,7 +83,7 @@ public class BloomFilter {
     {
         int[] tmpset = getSetArray(obj);
         for (int i : tmpset)
-            if (set[i] != 1)
+            if (!set.get(i))
                 return false;
         return true;
     }
