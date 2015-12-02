@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import javax.swing.SwingUtilities;
 
 
+
 public class ChatClient implements Runnable {
 
     private Socket socket = null;
