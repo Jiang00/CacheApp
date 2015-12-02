@@ -69,7 +69,7 @@ public class Initialize {
 
         // Print message if sets were built successfully
         System.out.println("Done adding elements.");
-        
+        SwingWorker.setGUIText("Done adding elements.");
         return true;
     }
     
@@ -81,6 +81,7 @@ public class Initialize {
         BloomFilter otherFilter = new BloomFilter(set, keySize, numberOfElements);
         
         System.out.println("Processing: Please Wait...");
+        SwingWorker.setGUIText("Processing: Please Wait...");
         for (int jj = 0; jj < strings.size(); jj++) {
             String currentString = (String) strings.get(jj);
             if (!otherFilter.contains(currentString)) {
@@ -90,11 +91,14 @@ public class Initialize {
         }
         System.out.println("Processing done.");
         System.out.println("Preparing to send " + bytesOfString + " bytes of data.");
+        SwingWorker.setGUIText("Processing done.");
+        SwingWorker.setGUIText("Preparing to send " + bytesOfString + " bytes of data.");
         return toSendStrings;
     }
     
     public static void addStrings(ArrayList<String> toAdd) {
         System.out.println("Refreshing Data Structure...");
+        SwingWorker.setGUIText("Refreshing Data Structure...");
         int ecount = strings.size() + toAdd.size();
         for (String s : toAdd) {
             if (!strings.contains(s)) {
@@ -104,6 +108,9 @@ public class Initialize {
         }
         int acount = strings.size();
         int dcount = ecount-acount;
+        SwingWorker.setGUIText("Done Refreshing");
+        SwingWorker.setGUIText("Total number of false positives: " + dcount);
+        SwingWorker.setGUIText("Constructing File");
         System.out.println("Done Refreshing");
         System.out.println("Total number of false positives: " + dcount);
         System.out.println("Constructing File");
@@ -130,6 +137,7 @@ public class Initialize {
                 System.out.println(e);
             }
         }
+         SwingWorker.setGUIText("File Constructed");
         System.out.println("File Constructed");
     }
     
@@ -139,12 +147,14 @@ public class Initialize {
            strings.add(entry);
            filter.add(entry);
            System.out.println("Entry added");
+           SwingWorker.setGUIText("Entry added");
         }
         else {
             int cweight = st.get(entry) + 1;
             st.put(entry, null);
             st.put(entry,cweight);
             System.out.println("Updated value to " + st.get(entry));
+            SwingWorker.setGUIText("Updated value to " + st.get(entry));
         }
     }
 }

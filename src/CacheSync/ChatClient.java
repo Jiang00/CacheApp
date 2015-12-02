@@ -34,11 +34,10 @@ public class ChatClient implements Runnable {
     public ChatClient(String serverName, int serverPort, GUI gui) {
         this.g = gui;
         System.out.println("Establishing connection. Please wait ...");
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                g.setTextMessage("Establishing connection. Please wait ...");
-            }
-        });
+
+
+                SwingWorker.setGUIText("Establishing connection. Please wait ...");
+  
  
        try {
             socket = new Socket(serverName, serverPort);
@@ -53,20 +52,15 @@ public class ChatClient implements Runnable {
         } catch (UnknownHostException uhe) {
             System.out.println("Host unknown: " + uhe.getMessage());
             
-            SwingUtilities.invokeLater(new Runnable() {
-                public void run() {
-                    g.setTextMessage("Host unknown: " + uhe.getMessage());
-                }
-            });
+            SwingWorker.setGUIText("Host unknown: " + uhe.getMessage());
+
 
         } catch (IOException ioe) {
             System.out.println("Unexpected exception: " + ioe.getMessage());
 
-            SwingUtilities.invokeLater(new Runnable() {
-                public void run() {
-                    g.setTextMessage("Unexpected exception: " + ioe.getMessage());
-                }
-            });
+
+         SwingWorker.setGUIText("Unexpected exception: " + ioe.getMessage());
+
 
         }
     }
@@ -77,20 +71,12 @@ public class ChatClient implements Runnable {
             oos.flush();
             System.out.println("Sent Bloom Filter Successfully.");
             if (pay.filter != null) {
-                SwingUtilities.invokeLater(new Runnable() {
-                    public void run() {
-                        g.setTextMessage("Sent " + (pay.filter.size() / 8000) + " kilo bytes of data.");
-                    }
-                });
+           SwingWorker.setGUIText("Sent " + (pay.filter.size() / 8000) + " kilo bytes of data.");
             }
         } catch (IOException ioe) {
             System.out.println("Sending error: " + ioe.getMessage());
 
-            SwingUtilities.invokeLater(new Runnable() {
-                public void run() {
-                    g.setTextMessage("Establishing connection. Please wait ...");
-                }
-            });
+                    SwingWorker.setGUIText("Establishing connection. Please wait ...");
         }
     }
     
@@ -103,10 +89,14 @@ public class ChatClient implements Runnable {
         
         System.out.println("Received payload with\n" + 
                            "\t ID: " + msg.id);
+        SwingWorker.setGUIText("Received payload with\n" + 
+                           "\t ID: " + msg.id);
         
         if (msg.id == 2) {
             System.out.println("Recieved ArrayList of Strings and Bloom Filter");
+            SwingWorker.setGUIText("Recieved ArrayList of Strings and Bloom Filter");
             System.out.println("Number of strings recieved: " + msg.strings.size());
+            SwingWorker.setGUIText("Number of strings recieved: " + msg.strings.size());
             // Determine which strings the client needs
             ArrayList<String> stringsToSend = Initialize.getStrings(msg.filter, msg.keySize, msg.numberOfElements);
             pay = new Payload(3, null, stringsToSend);
@@ -140,11 +130,8 @@ public class ChatClient implements Runnable {
             }
         } catch (IOException ioe) {
             System.out.println("Error closing ...");
-            SwingUtilities.invokeLater(new Runnable() {
-                public void run() {
-                    g.setTextMessage("Error closing ...");
-                }
-            });
+                    SwingWorker.setGUIText("Error closing ...");
+
         }
         if(client!=null){
         client.close();

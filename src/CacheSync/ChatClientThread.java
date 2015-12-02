@@ -46,12 +46,8 @@ public class ChatClientThread extends Thread {
         } catch (IOException ioe) {
 
             System.out.println("Error getting input stream: " + ioe);
+            SwingWorker.setGUIText("Error getting input stream: " + ioe);
 
-            SwingUtilities.invokeLater(new Runnable() {
-                public void run() {
-                    g.setTextMessage("Error getting input stream: " + ioe);
-                }
-            });
             client.stop();
         }
     }
@@ -70,11 +66,8 @@ public class ChatClientThread extends Thread {
         } catch (IOException ioe) {
             System.out.println("Error closing input stream: " + ioe);
 
-            SwingUtilities.invokeLater(new Runnable() {
-                public void run() {
-                    g.setTextMessage("Error closing input stream: " + ioe);
-                }
-            });
+                    SwingWorker.setGUIText("Error closing input stream: " + ioe);
+
         }
     }
 
@@ -95,11 +88,8 @@ public class ChatClientThread extends Thread {
                 } catch (IOException ioe) {
                     System.out.println("Listening error: " + ioe.getMessage());
 
-                    SwingUtilities.invokeLater(new Runnable() {
-                        public void run() {
-                            g.setTextMessage("Listening error: " + ioe.getMessage());
-                        }
-                    });
+                    SwingWorker.setGUIText("Listening error: " + ioe.getMessage());
+
                     client.stop();
                     close();
                     listen = false;
