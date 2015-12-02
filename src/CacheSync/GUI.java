@@ -383,7 +383,7 @@ public class GUI extends javax.swing.JFrame {
 
     private void jButtonConnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConnectActionPerformed
         try {
-            int portNumber = Integer.parseInt(jTextFieldPortServer.getText());
+            int portNumber = Integer.parseInt(jTextFieldPort.getText());
             client=new ChatClient(jTextFieldIP.getText(), portNumber, this);
             jButtonConnect.setEnabled(false);
             jButtonDisconnect.setEnabled(true);
