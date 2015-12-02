@@ -27,26 +27,20 @@ public class ChatServer implements Runnable {
     public ChatServer(int port, GUI gui) {
         try {
             this.g=gui;
-             SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                g.setTextMessage("Binding to port " + port + ", please wait  ...");
-            }
-        });
+ 
+                SwingWorker.setGUIText("Binding to port " + port + ", please wait  ...");
+            
+
             System.out.println("Binding to port " + port + ", please wait  ...");
             server = new ServerSocket(port);
-             SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                g.setTextMessage("Server started: " + server);
-            }
-        });
+                SwingWorker.setGUIText("Server started: " + server);
+            
+
             System.out.println("Server started: " + server);
             start();
         } catch (IOException ioe) {
-             SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                g.setTextMessage("Can not bind to port " + port + ": " + ioe.getMessage());
-            }
-        });
+
+            SwingWorker.setGUIText("Can not bind to port " + port + ": " + ioe.getMessage());
             System.out.println("Can not bind to port " + port + ": " + ioe.getMessage());
         }
     }
@@ -54,20 +48,13 @@ public class ChatServer implements Runnable {
     public void run() {
         while (thread != null) {
             try {
-                SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                g.setTextMessage("Waiting for a client ...");
-            }
-        });
+           SwingWorker.setGUIText("Waiting for a client ...");
+
                 System.out.println("Waiting for a client ...");
                 addThread(server.accept());
             } catch (IOException ioe) {
                 
-                SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                g.setTextMessage("Server accept error: " + ioe);
-            }
-        });
+         SwingWorker.setGUIText("Server accept error: " + ioe);
                 System.out.println("Server accept error: " + ioe);
                 try {
                     stop();
