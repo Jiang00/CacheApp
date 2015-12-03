@@ -104,7 +104,7 @@ public class ChatClient implements Runnable {
             send(pay);
         }
         else if (msg.id == 3) {
-            System.out.println("Recieved ArrayList of Strings and Bloom Filter");
+            System.out.println("Recieved ArrayList of Strings");
             System.out.println("Number of strings recieved: " + msg.strings.size());
             Initialize.addStrings(msg.strings);
         }
