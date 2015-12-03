@@ -31,7 +31,7 @@ public class GUI extends javax.swing.JFrame {
         jButtonDisconnectServer.setEnabled(false);
         SwingWorker.getGUI(this);
         
-        jTextAreaMessage.setText("Version 69 \n");
+        jTextAreaMessage.setText("Version 70 \n");
         
         jTextFieldSearchBar.getDocument().addDocumentListener(new DocumentListener(){
             @Override

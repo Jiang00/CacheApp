@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.BitSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
@@ -21,7 +20,7 @@ public class ChatServer implements Runnable {
     private int clientCount = 0;
     public Payload load = null;
     
-    private byte numberOfHandlesOccured = 0;
+    private int numberOfHandlesOccured = 0;
     private Payload client0Payload = null;
     
     GUI g;
@@ -115,7 +114,7 @@ public class ChatServer implements Runnable {
                                    "\t ID: " + pl.id);
                 
                 if (pl.id == 2) {
-                    if (numberOfHandlesOccured == 0 && clients.length == 2) {
+                    if (numberOfHandlesOccured == 0 && clientCount == 2) {
                         System.out.println("Recieved ArrayList of Strings and Bloom Filter");
                         SwingWorker.setGUIText("Recieved ArrayList of Strings and Bloom Filter");
                         System.out.println("Number of strings recieved: " + pl.strings.size());
