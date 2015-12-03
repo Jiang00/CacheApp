@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
@@ -19,6 +20,9 @@ public class ChatServer implements Runnable {
     private Thread thread = null;
     private int clientCount = 0;
     public Payload load = null;
+    
+    private byte numberOfHandlesOccured = 0;
+    private Payload client0Payload = null;
     
     GUI g;
 
@@ -92,13 +96,12 @@ public class ChatServer implements Runnable {
     
     public void send(Payload load){
         try {
-                        for (int i = 0; i < clientCount; i++) {
-                            clients[i].send(load);
-                        }
-
-                    } catch (IOException ex) {
-                        Logger.getLogger(ChatServer.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+            for (int i = 0; i < clientCount; i++) {
+                clients[i].send(load);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(ChatServer.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public synchronized void handle(int ID, Payload pl) throws IOException {
@@ -112,15 +115,35 @@ public class ChatServer implements Runnable {
                                    "\t ID: " + pl.id);
                 
                 if (pl.id == 2) {
-                    System.out.println("Recieved ArrayList of Strings and Bloom Filter");
-                    SwingWorker.setGUIText("Recieved ArrayList of Strings and Bloom Filter");
-                    System.out.println("Number of strings recieved: " + pl.strings.size());
-                    SwingWorker.setGUIText("Number of strings recieved: " + pl.strings.size());
-                    // Determine which strings the client needs
-                    ArrayList<String> stringsToSend = Initialize.getStrings(pl.filter, pl.keySize, pl.numberOfElements);
+                    if (numberOfHandlesOccured == 0 && clients.length == 2) {
+                        System.out.println("Recieved ArrayList of Strings and Bloom Filter");
+                        SwingWorker.setGUIText("Recieved ArrayList of Strings and Bloom Filter");
+                        System.out.println("Number of strings recieved: " + pl.strings.size());
+                        SwingWorker.setGUIText("Number of strings recieved: " + pl.strings.size());
+                        Initialize.addStrings(pl.strings);
+                        client0Payload = pl;
+                    }
+                    else {
+                        System.out.println("Recieved ArrayList of Strings and Bloom Filter");
+                        SwingWorker.setGUIText("Recieved ArrayList of Strings and Bloom Filter");
+                        System.out.println("Number of strings recieved: " + pl.strings.size());
+                        SwingWorker.setGUIText("Number of strings recieved: " + pl.strings.size());
+                        // Determine which strings the client needs
+                        ArrayList<String> stringsToSend = Initialize.getStrings(pl.filter, pl.keySize, pl.numberOfElements);
+                        load = new Payload(3, null, stringsToSend);
+                        send(load);
+                        Initialize.addStrings(pl.strings);
+                    }
+                }
+                
+                numberOfHandlesOccured++;
+                
+                if (numberOfHandlesOccured == 2) {
+                    SwingWorker.setGUIText("Sending updated strings to Client 0.");
+                    // Get strings to send
+                    ArrayList<String> stringsToSend = Initialize.getStrings(client0Payload.filter, client0Payload.keySize, client0Payload.numberOfElements);
                     load = new Payload(3, null, stringsToSend);
-                    send(load);
-                    Initialize.addStrings(pl.strings);
+                    clients[0].send(load);
                 }
     }
 
