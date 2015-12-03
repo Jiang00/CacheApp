@@ -111,18 +111,15 @@ public class ChatServer implements Runnable {
                 System.out.println("Received payload with\n" + 
                                    "\t ID: " + pl.id);
                 
-                if (pl.id == 1) {
-                    System.out.println("Recieved Bloom Filter");
+                if (pl.id == 2) {
+                    System.out.println("Recieved ArrayList of Strings and Bloom Filter");
+                    SwingWorker.setGUIText("Recieved ArrayList of Strings and Bloom Filter");
+                    System.out.println("Number of strings recieved: " + pl.strings.size());
+                    SwingWorker.setGUIText("Number of strings recieved: " + pl.strings.size());
                     // Determine which strings the client needs
                     ArrayList<String> stringsToSend = Initialize.getStrings(pl.filter, pl.keySize, pl.numberOfElements);
-                    // Create the payload
-                    load = new Payload(2, Initialize.filter, stringsToSend);
-                    // Try to send it
+                    load = new Payload(3, null, stringsToSend);
                     send(load);
-                }
-                else if (pl.id == 3) {
-                    System.out.println("Recieved ArrayList of Strings and Bloom Filter");
-                    System.out.println("Number of strings recieved: " + pl.strings.size());
                     Initialize.addStrings(pl.strings);
                 }
     }
