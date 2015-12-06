@@ -19,6 +19,8 @@ public class SwingWorker {
         g = gui;
     }
     
+
+    
     public static void setGUIText(String s){
     SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
