@@ -20,6 +20,9 @@ public class ChatServer implements Runnable {
     private int clientCount = 0;
     public Payload load = null;
     
+    private int numberOfHandlesOccured = 0;
+    private Payload client0Payload = null;
+    
     GUI g;
 
     private static final int k = 13;
@@ -89,44 +92,58 @@ public class ChatServer implements Runnable {
         }
         return -1;
     }
-
+    
+    public void send(Payload load){
+        try {
+            for (int i = 0; i < clientCount; i++) {
+                clients[i].send(load);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(ChatServer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     public synchronized void handle(int ID, Payload pl) throws IOException {
         this.load = pl;
         
-           SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-               
+
                 g.setTextMessage("Received payload with\n" + 
                                    "\t ID: " + pl.id);
                 
                 System.out.println("Received payload with\n" + 
                                    "\t ID: " + pl.id);
                 
-                if (pl.id == 1) {
-                    System.out.println("Recieved Bloom Filter");
-                    // Determine which strings the client needs
-                    ArrayList<String> stringsToSend = Initialize.getStrings(pl.filter, pl.keySize, pl.numberOfElements);
-                    // Create the payload
-                    load = new Payload(2, Initialize.filter, stringsToSend);
-                    // Try to send it
-                    try {
-                        for (int i = 0; i < clientCount; i++) {
-                            clients[i].send(load);
-                        }
-//                        int bytesSent = load.filter.size()/8000 + ;
-//                        g.setTextMessage("Sent " + () + 
-//                                         );
-                    } catch (IOException ex) {
-                        Logger.getLogger(ChatServer.class.getName()).log(Level.SEVERE, null, ex);
+                if (pl.id == 2) {
+                    if (numberOfHandlesOccured == 0 && clientCount == 2) {
+                        System.out.println("Recieved ArrayList of Strings and Bloom Filter");
+                        SwingWorker.setGUIText("Recieved ArrayList of Strings and Bloom Filter");
+                        System.out.println("Number of strings recieved: " + pl.strings.size());
+                        SwingWorker.setGUIText("Number of strings recieved: " + pl.strings.size());
+                        Initialize.addStrings(pl.strings);
+                        client0Payload = pl;
+                    }
+                    else {
+                        System.out.println("Recieved ArrayList of Strings and Bloom Filter");
+                        SwingWorker.setGUIText("Recieved ArrayList of Strings and Bloom Filter");
+                        System.out.println("Number of strings recieved: " + pl.strings.size());
+                        SwingWorker.setGUIText("Number of strings recieved: " + pl.strings.size());
+                        // Determine which strings the client needs
+                        ArrayList<String> stringsToSend = Initialize.getStrings(pl.filter, pl.keySize, pl.numberOfElements);
+                        load = new Payload(3, null, stringsToSend);
+                        send(load);
+                        Initialize.addStrings(pl.strings);
                     }
                 }
-                else if (pl.id == 3) {
-                    System.out.println("Recieved ArrayList of Strings and Bloom Filter");
-                    System.out.println("Number of strings recieved: " + pl.strings.size());
-                    Initialize.addStrings(pl.strings);
+                
+                numberOfHandlesOccured++;
+                
+                if (numberOfHandlesOccured == 2) {
+                    SwingWorker.setGUIText("Sending updated strings to Client 0.");
+                    // Get strings to send
+                    ArrayList<String> stringsToSend = Initialize.getStrings(client0Payload.filter, client0Payload.keySize, client0Payload.numberOfElements);
+                    load = new Payload(3, null, stringsToSend);
+                    clients[0].send(load);
                 }
-            }
-        });
     }
 
     public synchronized void remove(int ID) throws IOException {

@@ -40,7 +40,9 @@ public class ChatClient implements Runnable {
   
  
        try {
+                       
             socket = new Socket(serverName, serverPort);
+
             System.out.println("Connected: " + socket);
             isConnected = true;
             SwingUtilities.invokeLater(new Runnable() {
@@ -92,15 +94,18 @@ public class ChatClient implements Runnable {
         SwingWorker.setGUIText("Received payload with\n" + 
                            "\t ID: " + msg.id);
         
-        if (msg.id == 2) {
-            System.out.println("Recieved ArrayList of Strings and Bloom Filter");
-            SwingWorker.setGUIText("Recieved ArrayList of Strings and Bloom Filter");
-            System.out.println("Number of strings recieved: " + msg.strings.size());
-            SwingWorker.setGUIText("Number of strings recieved: " + msg.strings.size());
+        if (msg.id == 1) {
+            System.out.println("Recieved Bloom Filter");
             // Determine which strings the client needs
             ArrayList<String> stringsToSend = Initialize.getStrings(msg.filter, msg.keySize, msg.numberOfElements);
-            pay = new Payload(3, null, stringsToSend);
+            // Create the payload
+            pay = new Payload(2, Initialize.filter, stringsToSend);
+            // Try to send it
             send(pay);
+        }
+        else if (msg.id == 3) {
+            System.out.println("Recieved ArrayList of Strings");
+            System.out.println("Number of strings recieved: " + msg.strings.size());
             Initialize.addStrings(msg.strings);
         }
     }

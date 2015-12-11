@@ -137,7 +137,7 @@ public class Initialize {
                 System.out.println(e);
             }
         }
-         SwingWorker.setGUIText("File Constructed");
+        SwingWorker.setGUIText("File Constructed");
         System.out.println("File Constructed");
     }
     
